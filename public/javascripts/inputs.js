@@ -14,9 +14,4 @@ class Inputs {
       on_file_selected(error, file, url);
     });
   }
-
-  //todo: implement it for mobile platform
-  static use_camera(callback) {
-
-  }
 }
