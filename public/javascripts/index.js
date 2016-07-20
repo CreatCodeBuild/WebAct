@@ -16,9 +16,9 @@ function process_image() {
   }
 }
 
-function set_image_view(file) {
+function set_image_view(url) {
   let imageElement = document.getElementById('ocr');
-  imageElement.src = file;
+  imageElement.src = url;
 }
 
 window.onload = function() {
@@ -27,6 +27,8 @@ window.onload = function() {
   Inputs.select_file(element, function(err, file, url) {
     if(err === undefined) {
       console.log(file, url);
+      set_image_view(url);
+      process_image();
     } else {
       console.log(err);
     }

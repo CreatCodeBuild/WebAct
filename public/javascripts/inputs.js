@@ -15,6 +15,7 @@ class Inputs {
     });
   }
 
+  //todo: implement it for mobile platform
   static use_camera(callback) {
 
   }
