@@ -1,26 +1,26 @@
 <html>
-<head>
-  <!-- Latest compiled and minified CSS -->
-  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"> -->
-  <!-- Optional theme -->
-  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous"> -->
-  <!-- Latest compiled and minified JavaScript -->
-  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script> -->
+  <head>
+    <link rel="stylesheet" href="materialize/css/materialize.css">
+    <link rel="stylesheet" href="stylesheets/style.css">
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
-  <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
-<!-- 
-  <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script> -->
-  <script src="javascripts/tesseract.js"></script>
-  <script src="javascripts/inputs.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
-  <script src="javascripts/index.js"></script>
-</head>
-<body>
-  <div id='image_frame'>
-    <img id="ocr" />
-  </div>
-  <div id="display"></div>
-  <input id="select_file" type="file">
-</body>
+    <script src="javascripts/tesseract.js"></script>
+    <script src='javascripts/jquery-3.1.0.js'></script>
+    <script src="materialize/js/materialize.js"></script>
+    <script src="javascripts/inputs.js"></script>
+    <script src="javascripts/index.js"></script>
+  </head>
+  <body>
+    <div id='image_frame'>
+      <img id="ocr" width="400px" height="300px"/>
+    </div>
+    <div id="display"></div>
+    <form action="#">
+      <div class="file-field input-field">
+        <div class="btn">
+          <span>File</span>
+          <input id='select_file' type="file">
+        </div>
+      </div>
+    </form>
+  </body>
 </html>
