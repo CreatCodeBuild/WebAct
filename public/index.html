@@ -1,26 +1,98 @@
-<html>
-  <head>
-    <link rel="stylesheet" href="materialize/css/materialize.css">
-    <link rel="stylesheet" href="stylesheets/style.css">
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Starter Template - Materialize</title>
 
-    <script src="javascripts/tesseract.js"></script>
-    <script src='javascripts/jquery-3.1.0.js'></script>
-    <script src="materialize/js/materialize.js"></script>
-    <script src="javascripts/inputs.js"></script>
-    <script src="javascripts/index.js"></script>
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+  <script src="javascripts/inputs.js"></script>
+  <script src="javascripts/index.js"></script>
+</head>
+<body>
+  <nav class="light-blue lighten-1" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Webact</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="#">Navbar Link</a></li>
+      </ul>
+
+      <ul id="nav-mobile" class="side-nav">
+        <li><a href="#">Navbar Link</a></li>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+  <div class="section no-pad-bot" id="index-banner">
+    <div class="container">
+      <br><br>
+      <div class="row center">
+        <h5 class="header col s12 orange-text">Upload an image to recognize</h5>
+      </div>
+      <div id='image_frame'>
+        <img id="ocr" height="300px"/>
+      </div>
+      <div class="row center">
+        <form class='' action="#">
+          <div class="file-field input-field btn-large waves-effect waves-light orange">
+            <span>upload</span>
+            <input id='select_file' type="file">
+          </div>
+        </form>
+      </div>
+      <br><br>
+
+    </div>
+  </div>
+
+
+
+  <footer class="page-footer orange">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">About Webact</h5>
+          <p class="grey-text text-lighten-4">
+            Webact is a web-based OCR application. It uses tesseract.js as the OCR engine. Special thanks to the tesseract.js folks!
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      Made by <a class="orange-text text-lighten-3" href="http://materializecss.com">CreatCodeBuild@github.com</a>
+      </div>
+    </div>
+  </footer>
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
+
+  </body>
+</html>
+
+
+<!-- <html>
+  <head>
   </head>
   <body>
     <div id='image_frame'>
       <img id="ocr" width="400px" height="300px"/>
     </div>
     <div id="display"></div>
-    <form action="#">
-      <div class="file-field input-field">
-        <div class="btn">
-          <span>File</span>
-          <input id='select_file' type="file">
+    <div id='select_file_container'>
+      <form action="#">
+        <div class="file-field input-field">
+          <div id='select_file_btn' class="btn">
+            <span id='select_file_span'>File</span>
+            <input id='select_file' type="file">
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </body>
-</html>
+</html> -->
