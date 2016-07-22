@@ -23,6 +23,12 @@ function set_image_view(url) {
 
 window.onload = function() {
   console.log('window.onload');
+
+  //todo: implement it
+  function about_button_listener() {
+
+  }
+
   let element = document.getElementById('select_file');
 
   Inputs.select_file(element, function(err, file, url) {
