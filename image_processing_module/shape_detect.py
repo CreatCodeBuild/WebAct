@@ -2,6 +2,8 @@
 
 import cv2
 import numpy as np
+import sys
+import zerorpc
 
 
 def gray(im):
@@ -40,7 +42,8 @@ def line_detect(im):
 
 
 def run():
-    # image = cv2.imread('demo4.jpg')
+    file = sys.argv[1]
+    image = cv2.imread(file)
     grayed = gray(image)
     threshed = threshold(~grayed, 'mean')
 
@@ -54,23 +57,59 @@ def run():
         for x1, y1, x2, y2 in line:
             cv2.line(threshed, (x1, y1), (x2, y2), color, 3)
 
-    cv2.imwrite('lineremoved.jpg', threshed)
+    cv2.imwrite('temp.jpg', threshed)
+
+
+class StreamingRPC():
+    @zerorpc.stream
+    def prcess_image(self, image_buffer):
+        '''
+        receive image from client. remove lines. send processed image back
+        '''
+        image = cv2.imdecode(image_buffer)
+        grayed = gray(image)
+        threshed = threshold(~grayed, 'mean')
+        v_lines, h_lines = line_detect(threshed)
+        color = (0, 0, 0)
+        for line in v_lines:
+            for x1, y1, x2, y2 in line:
+                cv2.line(threshed, (x1, y1), (x2, y2), color, 3)
+        for line in h_lines:
+            for x1, y1, x2, y2 in line:
+                cv2.line(threshed, (x1, y1), (x2, y2), color, 3)
+        retval, buffer = cv2.imencode('.jpg', threshed)
+        return buffer
+
+
+def server_up():
+    server = zerorpc.Server(StreamingRPC())
+    server.bind("tcp://0.0.0.0:8888")  # listen for local address
+    server.run()
+
 
 if __name__ == '__main__':
-    image = cv2.imread('demo4.jpg')
-    grayed = gray(image)
-    threshed = threshold(~grayed, 'mean')
+    server_up()
 
-    v_lines, h_lines = line_detect(threshed)
+    # debug purpose
+    # image = cv2.imread(str(sys.argv[1]))
+    # grayed = gray(image)
+    # threshed = threshold(~grayed, 'mean')
+    #
+    # v_lines, h_lines = line_detect(threshed)
+    #
+    # color = (0, 0, 0)
+    # for line in v_lines:
+    #     for x1, y1, x2, y2 in line:
+    #         cv2.line(threshed, (x1, y1), (x2, y2), color, 3)
+    # for line in h_lines:
+    #     for x1, y1, x2, y2 in line:
+    #         cv2.line(threshed, (x1, y1), (x2, y2), color, 3)
+    #
+    # cv2.imshow('lines', threshed)
+    # cv2.waitKey()
+    # cv2.imwrite('lineremoved.jpg', threshed)
 
-    color = (0, 0, 0)
-    for line in v_lines:
-        for x1, y1, x2, y2 in line:
-            cv2.line(threshed, (x1, y1), (x2, y2), color, 3)
-    for line in h_lines:
-        for x1, y1, x2, y2 in line:
-            cv2.line(threshed, (x1, y1), (x2, y2), color, 3)
-
-    cv2.imshow('lines', threshed)
-    cv2.waitKey()
-    cv2.imwrite('lineremoved.jpg', threshed)
+    # didn't find out why this didn't work
+    # retval, buffer = cv2.imencode('.png', threshed)
+    # for b in buffer:
+    #     sys.stdout.write(b)
