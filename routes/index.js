@@ -10,12 +10,14 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.get('/image_process', function(req, res) {
+router.post('/image_process', function(req, res) {
   //todo: implement it
-  let image = //
-  client.invoke('prcess_image', image, function(err, result, more) {
-    console.log(result);
-  });
+  // var image = req.body.data;
+  console.log(typeof req.body)
+  res.end(new Buffer(req.body));
+  // client.invoke('prcess_image', image, function(err, result, more) {
+  //   console.log(result);
+  // });
 });
 
 module.exports = router;

@@ -16,16 +16,16 @@ class FileIt {
         if (request.status === 200) {
           console.log(request.responseType);
           console.log(request.response);
-          server_response_callback(undefined, response);
+          server_response_callback(undefined, request.response);
         } else {
           console.log('There was a problem with the request.', 'request.status:', request.status);
-          server_response_callback('request.status is not 200. It is '+request.status, response);
+          server_response_callback('request.status is not 200. It is '+request.status, request.response);
         }
       }
     }
     request.open('POST', rest_api_route, true);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-    request.send(data);
+    request.send(file);
   }
 
   static send_file_socketio() {

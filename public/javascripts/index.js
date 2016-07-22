@@ -36,10 +36,12 @@ window.onload = function() {
       console.log(file, url);
       set_image_view(url);
       // process_image();
+      console.log(file.size);
       FileIt.send_file_http(file, '/image_process', function(err, response) {
         if(err === undefined) {
           let processedImageUrl = URL.createObjectURL(response);
-          set_image_view(processedImageUrl);
+          let imageElement = document.getElementById('img2');
+          imageElement.src = processedImageUrl;
         } else {
           console.log(err, response);
         }
