@@ -25,7 +25,13 @@ class FileIt {
     }
     request.open('POST', rest_api_route, true);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-    request.send(file);
+
+    let reader = new FileReader()
+    reader.onloadend = function() {
+      console.log(reader.result.byteLength)
+      request.send({'file': reader.result});
+    }
+    reader.readAsArrayBuffer(file);
   }
 
   static send_file_socketio() {

@@ -39,7 +39,7 @@ window.onload = function() {
       console.log(file.size);
       FileIt.send_file_http(file, '/image_process', function(err, response) {
         if(err === undefined) {
-          let processedImageUrl = URL.createObjectURL(response);
+          let processedImageUrl = URL.createObjectURL(new File(response));
           let imageElement = document.getElementById('img2');
           imageElement.src = processedImageUrl;
         } else {

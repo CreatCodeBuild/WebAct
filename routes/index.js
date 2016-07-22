@@ -13,8 +13,8 @@ router.get('/', function(req, res, next) {
 router.post('/image_process', function(req, res) {
   //todo: implement it
   // var image = req.body.data;
-  console.log(typeof req.body)
-  res.end(new Buffer(req.body));
+  console.log(Object.keys(req.body))
+  res.end(req.body.file);
   // client.invoke('prcess_image', image, function(err, result, more) {
   //   console.log(result);
   // });
