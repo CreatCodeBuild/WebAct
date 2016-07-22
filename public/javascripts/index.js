@@ -35,7 +35,15 @@ window.onload = function() {
     if(err === undefined) {
       console.log(file, url);
       set_image_view(url);
-      process_image();
+      // process_image();
+      FileIt.send_file_http(file, '/image_process', function(err, response) {
+        if(err === undefined) {
+          let processedImageUrl = URL.createObjectURL(response);
+          set_image_view(processedImageUrl);
+        } else {
+          console.log(err, response);
+        }
+      });
     } else {
       console.log(err);
     }

@@ -19,7 +19,7 @@ class FileIt {
           server_response_callback(undefined, response);
         } else {
           console.log('There was a problem with the request.', 'request.status:', request.status);
-          server_response_callback('request.status is not 200. It is '+request.status, undefined);
+          server_response_callback('request.status is not 200. It is '+request.status, response);
         }
       }
     }
