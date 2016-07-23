@@ -2,8 +2,11 @@ var express = require('express');
 var router = express.Router();
 var zerorpc = require('zerorpc');
 var fs = require('fs');
-var ServerSocketManager = require('../SocketioServerManager');
-var serverSocketManager = new ServerSocketManager(express);
+
+var http = require('http');
+var httpServer = http.Server(express);
+var ServerSocketManager = require('../socketio_server_manager');
+var serverSocketManager = new ServerSocketManager(httpServer);
 
 var zerorpcClient = new zerorpc.Client();
 zerorpcClient.connect('tcp://127.0.0.1:8888')
