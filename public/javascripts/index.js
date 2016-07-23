@@ -37,12 +37,10 @@ window.onload = function() {
       set_image_view(url);
       // process_image();
 
-      let socketioClientManager = new SocketioClientManager();
-      socketioClientManager.emit_video_stream(file);
-      socketioClientManager.on_done_upload(function() {
-        //todo: implement the correct callback
-        console.log('socketioClientManager.on_done_upload :: need to implement the correct callback');
-      });
+      // let socketioClientManager = new SocketioClientManager();
+      // console.log('let socketioClientManager = new SocketioClientManager()');
+      // socketioClientManager.emit_file_stream(file);
+      // console.log('done?!');
 
       // FileIt.send_file_http(file, '/image_process', function(err, response) {
       //   if(err === undefined) {
