@@ -1,23 +1,17 @@
 var fs = require('fs')
+var io = require('socket.io')(server);
+var ss = require('socket.io-stream');
+
 
 const EVENT = {
 	FILE_UPLOAD: 'file upload',
-	DONE_UPLOAD: 'done upload'
+	DONE_UPLOAD: 'done upload',
+	PROCESSED_IMAGE: 'processed image'
 }
 
+const TAG = 'SocketioServerManager';
 class SocketioServerManager {
 	static init(server) {
-		console.log('make io from server');
-		var io = require('socket.io')(server);
-		console.log('require io-stream');
-		var ss = require('socket.io-stream');
-
-		const TAG = 'SocketioServerManager';
-		const EVENT = {
-			FILE_UPLOAD: 'file upload',
-			DONE_UPLOAD: 'done upload'
-		}
-
 		console.log('init everything');
 		io.on('connection', function(socket) {
 			console.log('on connection');
@@ -31,11 +25,3 @@ class SocketioServerManager {
 
 
 module.exports = SocketioServerManager;
-
-
-// {
-//   // need to implement this part later
-//   var zerorpc = require('zerorpc');
-//   var zerorpcClient = new zerorpc.Client();
-//   zerorpcClient.connect('tcp://127.0.0.1:8888')
-// }

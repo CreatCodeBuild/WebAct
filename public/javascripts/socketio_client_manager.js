@@ -23,10 +23,12 @@ class SocketioClientManager {
 	static init() {
 		socket.on(EVENT.DONE_UPLOADING, function() {
 			// todo: implement it
+			console.log('EVENT.DONE_UPLOADING');
 		});
 
 		socket.on(EVENT.PROCESSED_IMAGE, function() {
 			// todo: implement it
+			console.log('EVENT.PROCESSED_IMAGE');
 		})
 	}
 
