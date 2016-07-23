@@ -9,9 +9,10 @@ var socket = io.connect('http://localhost:8080');
 class SocketioClientManager {
 
 	static emit_file_stream(file) {
+		console.log('emit_file_stream');
 		var stream = ss.createStream();
     // upload a file to the server.
-    ss(socket).emit('file', stream, {size: file.size});
+    ss(socket).emit(EVENT.FILE_UPLOAD, stream, {size: file.size});
     ss.createBlobReadStream(file).pipe(stream);
 	}
 
