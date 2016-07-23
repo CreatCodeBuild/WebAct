@@ -1,8 +1,5 @@
 class SocketioServerManager {
-	static init(app) {
-		console.log('init');
-		console.log('require http, make server from app');
-		var server = require('http').Server(app);
+	static init(server) {
 		console.log('make io from server');
 		var io = require('socket.io')(server);
 		// console.log('require io-stream');

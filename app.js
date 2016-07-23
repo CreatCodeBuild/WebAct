@@ -57,9 +57,4 @@ app.use(function(err, req, res, next) {
   });
 });
 
-
-var SocketioServerManager = require('./socketio_server_manager');
-SocketioServerManager.init(app);
-
-
 module.exports = app;
