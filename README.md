@@ -5,6 +5,9 @@ Text Recognition made easy on Web
 The web app is not publicly avaiable yet. Still developing...
 But you can fork or clone this repo, and run it in your localhost with NodeJS
 
+# Code & API
+see the source code comments
+
 # Design
 I watched a "Documentation Driven Development" talk from PyCon16, which inspired me to write this doc to guide my development.
 Hope this can get you excited to join me as well. (No, I don't really has that hope unless this is a cool software)
