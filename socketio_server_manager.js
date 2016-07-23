@@ -7,11 +7,11 @@ const EVENT = {
 	DONE_UPLOAD: 'done upload'
 }
 
-const TAG = 'ServerSocketManager';
+const TAG = 'SocketioServerManager';
 
-class ServerSocketManager {
+class SocketioServerManager {
 
-	constructor(httpServer, bulletDB) {
+	constructor(httpServer) {
 		this.io = socketio(httpServer);
 	}
 
@@ -40,4 +40,4 @@ class ServerSocketManager {
 }
 
 
-module.exports = ServerSocketManager;
+module.exports = SocketioServerManager;
