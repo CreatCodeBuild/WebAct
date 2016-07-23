@@ -33,19 +33,26 @@ window.onload = function() {
 
   Inputs.select_file(element, function(err, file, url) {
     if(err === undefined) {
-      console.log(file, url);
+      console.log(file, file.size);
       set_image_view(url);
       // process_image();
-      console.log(file.size);
-      FileIt.send_file_http(file, '/image_process', function(err, response) {
-        if(err === undefined) {
-          let processedImageUrl = URL.createObjectURL(new File(response));
-          let imageElement = document.getElementById('img2');
-          imageElement.src = processedImageUrl;
-        } else {
-          console.log(err, response);
-        }
+
+      let socketioClientManager = new SocketioClientManager();
+      socketioClientManager.emit_video_stream(file);
+      socketioClientManager.on_done_upload(function() {
+        //todo: implement the correct callback
+        console.log('socketioClientManager.on_done_upload :: need to implement the correct callback');
       });
+
+      // FileIt.send_file_http(file, '/image_process', function(err, response) {
+      //   if(err === undefined) {
+      //     let processedImageUrl = URL.createObjectURL(new File(response));
+      //     let imageElement = document.getElementById('img2');
+      //     imageElement.src = processedImageUrl;
+      //   } else {
+      //     console.log(err, response);
+      //   }
+      // });
     } else {
       console.log(err);
     }

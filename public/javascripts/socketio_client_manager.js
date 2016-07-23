@@ -5,17 +5,13 @@ const EVENT = {
 
 
 /* Client Socket Manager */
-class SocketManager {
+class SocketioClientManager {
 
 	constructor() {
-		this.socket;
-	}
-
-	initSocket() {
 		this.socket = io();
 	}
 
-	emitVideoStream(file) {
+	emit_video_stream(file) {
 		var stream = ss.createStream();
     // upload a file to the server.
     ss(this.socket).emit(
@@ -38,7 +34,7 @@ class SocketManager {
     blobStream.pipe(stream);
 	}
 
-	onDoneUpload(callback) {
+	on_done_upload(callback) {
 		this.socket.on(EVENT.DONE_UPLOADING, callback);
 	}
 
