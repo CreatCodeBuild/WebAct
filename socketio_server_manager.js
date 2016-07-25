@@ -16,12 +16,24 @@ class SocketioServerManager {
 		console.log('init everything');
 		io.on('connection', function(socket) {
 			console.log('on connection');
-			ss(socket).on(EVENT.FILE_UPLOAD, function(stream, data) {
+			// todo:
+			// need to document that stream and additionalData are
+			// in below callback function
+			ss(socket).on(EVENT.FILE_UPLOAD, function(stream, additionalData) {
 				console.log('on EVENT.FILE_UPLOAD');
+				//need to figure out the actually api use
+				//zero rpc might be a great idea
+				//need to figure out the stream api first
 				// stream.pipe(fs.createWriteStream('temp.jpg'));
-				zeroClient.process_image(stream, function(result) {
-					console.log('got a result');
-				});
+				var bufferArray = [];
+				stream.on('data', function(data) {
+					bufferArray.push(data);
+				})
+				stream.on('end', function() {
+					zeroClient.process_image(Buffer.from(bufferArray), function(result) {
+						console.log('got a result');
+					});
+				})
 			});
 		});
 	}

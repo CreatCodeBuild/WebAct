@@ -62,11 +62,12 @@ def run():
 
 class StreamingRPC():
     @zerorpc.stream
-    def prcess_image(self, image_buffer):
+    def process_image(self, image_buffer):
         '''
         receive image from client. remove lines. send processed image back
         '''
-        image = cv2.imdecode(image_buffer)
+        print('type:', type(image_buffer), 'len:', len(image_buffer))
+        image = cv2.imdecode(np.array(bytearray(image_buffer)), cv2.IMREAD_COLOR)
         grayed = gray(image)
         threshed = threshold(~grayed, 'mean')
         v_lines, h_lines = line_detect(threshed)
