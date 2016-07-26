@@ -66,10 +66,24 @@ class StreamingRPC():
         '''
         receive image from client. remove lines. send processed image back
         '''
+        # i should consider this link
+        # http://stackoverflow.com/questions/11552926/how-to-read-raw-png-from-an-array-in-python-opencv
+        # it provides useful info
+        # convert raw binary data to OpenCV acceptable image object
+
+
         print('type:', type(image_buffer), 'len:', len(image_buffer))
-        image = cv2.imdecode(np.array(bytearray(image_buffer)), cv2.IMREAD_COLOR)
+        for c in image_buffer:
+            print('type of element:', type(c))
+        image_buffer = ''.join(image_buffer)
+        np_array = np.frombuffer(image_buffer, dtype='uint8')
+        image = cv2.imdecode(np_array, cv2.IMREAD_COLOR)
+        cv2.imshow('', image)
+        cv2.waitKey()
         grayed = gray(image)
+        print(1)
         threshed = threshold(~grayed, 'mean')
+        print(2)
         v_lines, h_lines = line_detect(threshed)
         color = (0, 0, 0)
         for line in v_lines:
@@ -79,7 +93,10 @@ class StreamingRPC():
             for x1, y1, x2, y2 in line:
                 cv2.line(threshed, (x1, y1), (x2, y2), color, 3)
         retval, buffer = cv2.imencode('.jpg', threshed)
-        return buffer
+        print('type:', type(buffer), 'len:', len(buffer))
+        # need to convert numpy ndarray to python list
+        # or any zerorpc seriallizable object
+        return np.frombuffer(buffer, dtype='uint8')
 
 
 def server_up():

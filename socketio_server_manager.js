@@ -27,10 +27,12 @@ class SocketioServerManager {
 				// stream.pipe(fs.createWriteStream('temp.jpg'));
 				var bufferArray = [];
 				stream.on('data', function(data) {
+					console.log(data.length);
 					bufferArray.push(data);
 				})
 				stream.on('end', function() {
-					zeroClient.process_image(Buffer.from(bufferArray), function(result) {
+					console.log(bufferArray.length);
+					zeroClient.process_image(bufferArray, function(result) {
 						console.log('got a result');
 					});
 				})
