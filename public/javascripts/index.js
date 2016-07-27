@@ -35,11 +35,11 @@ window.onload = function() {
     if(err === undefined) {
       console.log(file, file.size);
       set_image_view(url);
-      // process_image();
+      process_image();
 
       // let socketioClientManager = new SocketioClientManager();
       // console.log('let socketioClientManager = new SocketioClientManager()');
-      SocketioClientManager.emit_file_stream(file);
+      // SocketioClientManager.emit_file_stream(file);
       // console.log('done?!');
 
       // FileIt.send_file_http(file, '/image_process', function(err, response) {
