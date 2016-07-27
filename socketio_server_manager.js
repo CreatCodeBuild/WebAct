@@ -38,8 +38,15 @@ class SocketioServerManager {
 						if(result === undefined) {
 							console.log(results.length);
 							let res = results.join('');
-							console.log(res.length);
+							console.log('result string length:', res.length);
 							console.log('process_image end');
+
+							//convert string to blob
+							let bytes = new Uint8Array(res.length);
+							for(let i = 0; i < res.length; i++) {
+								bytes[i] = res.charCodeAt(i);
+							}
+							
 						} else {
 							// console.log(typeof result);
 							results.push(result);
