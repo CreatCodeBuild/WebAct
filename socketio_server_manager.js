@@ -1,12 +1,12 @@
-var fs = require('fs')
-var zeroClient = require('./rpc')
+var fs = require('fs');
+var zeroClient = require('./rpc');
 
 
 const EVENT = {
 	FILE_UPLOAD: 'file upload',
 	DONE_UPLOAD: 'done upload',
 	PROCESSED_IMAGE: 'processed image'
-}
+};
 
 const TAG = 'SocketioServerManager';
 class SocketioServerManager {
@@ -29,7 +29,7 @@ class SocketioServerManager {
 				stream.on('data', function(data) {
 					console.log(data.length);
 					bufferArray.push(data);
-				})
+				});
 				stream.on('end', function() {
 					console.log(bufferArray.length);
 					let results = [];
@@ -46,13 +46,13 @@ class SocketioServerManager {
 							for(let i = 0; i < res.length; i++) {
 								bytes[i] = res.charCodeAt(i);
 							}
-							
+
 						} else {
 							// console.log(typeof result);
 							results.push(result);
 						}
 					});
-				})
+				});
 			});
 		});
 	}
