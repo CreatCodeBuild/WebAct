@@ -1,12 +1,19 @@
 var fs = require('fs');
 var zeroClient = require('./rpc');
-
+const EventEmitter = require('events');
 
 const EVENT = {
 	FILE_UPLOAD: 'file upload',
 	DONE_UPLOAD: 'done upload',
 	PROCESSED_IMAGE: 'processed image'
 };
+
+
+class SocketioEventEmitter extends EventEmitter {}
+
+const socketioEventEmitter = new SocketioEventEmitter();
+
+
 
 const TAG = 'SocketioServerManager';
 class SocketioServerManager {
