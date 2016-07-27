@@ -15,6 +15,8 @@ const socketioEventEmitter = new SocketioEventEmitter();
 socketioEventEmitter.on(EVENT.PROCESSED_IMAGE, function(bytes) {
 	//send bytes back to browser
 	//todo: implement it
+	//check out the socketio and socket stream api
+	//probably a change to refine the code
 });
 
 
