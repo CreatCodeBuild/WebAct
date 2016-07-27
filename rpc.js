@@ -22,8 +22,7 @@ let zeroClient = {
   */
   process_image: function(image_buffer, callback) {
     client.invoke('process_image', image_buffer, function(error, res, more) {
-        console.log(res);
-        callback(res)
+        callback(error, res, more);
     });
   }
 };

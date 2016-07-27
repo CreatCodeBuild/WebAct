@@ -97,7 +97,7 @@ class StreamingRPC():
         # need to convert numpy ndarray to python list
         # or any zerorpc seriallizable object
         # int8 list?
-        return np.frombuffer(buffer, dtype='uint8')
+        return buffer.tostring()
 
 
 def server_up():

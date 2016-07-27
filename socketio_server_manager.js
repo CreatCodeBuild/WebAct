@@ -32,8 +32,18 @@ class SocketioServerManager {
 				})
 				stream.on('end', function() {
 					console.log(bufferArray.length);
-					zeroClient.process_image(bufferArray, function(result) {
-						console.log('got a result');
+					let results = [];
+					zeroClient.process_image(bufferArray, function(error, result) {
+						// console.log(typeof result);
+						if(result === undefined) {
+							console.log(results.length);
+							let res = results.join('');
+							console.log(res.length);
+							console.log('process_image end');
+						} else {
+							// console.log(typeof result);
+							results.push(result);
+						}
 					});
 				})
 			});
