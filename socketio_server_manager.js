@@ -49,6 +49,8 @@ class SocketioServerManager {
 
 							//emit a event with bytes
 							//need to use NodeJS Event Emitter or something
+							//after emit this event, handle this event
+							//send back bytes to browser end
 						} else {
 							// console.log(typeof result);
 							results.push(result);
