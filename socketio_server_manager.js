@@ -47,6 +47,8 @@ class SocketioServerManager {
 								bytes[i] = res.charCodeAt(i);
 							}
 
+							//emit a event with bytes
+							//need to use NodeJS Event Emitter or something
 						} else {
 							// console.log(typeof result);
 							results.push(result);
