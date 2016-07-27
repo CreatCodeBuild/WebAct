@@ -12,7 +12,10 @@ const EVENT = {
 class SocketioEventEmitter extends EventEmitter {}
 
 const socketioEventEmitter = new SocketioEventEmitter();
-
+socketioEventEmitter.on(EVENT.PROCESSED_IMAGE, function(bytes) {
+	//send bytes back to browser
+	//todo: implement it
+});
 
 
 const TAG = 'SocketioServerManager';
@@ -58,6 +61,7 @@ class SocketioServerManager {
 							//need to use NodeJS Event Emitter or something
 							//after emit this event, handle this event
 							//send back bytes to browser end
+							socketEventEmitter.emit(EVENT.PROCESSED_IMAGE, bytes);
 						} else {
 							// console.log(typeof result);
 							results.push(result);
