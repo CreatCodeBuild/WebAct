@@ -44,6 +44,7 @@ window.onload = function() {
       set_image_view(url);
       // process_image();
 
+      //todo: implement this
       //compress the iamge
       //first get the image element
       //second call JIC api
