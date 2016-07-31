@@ -35,8 +35,10 @@ var jic = {
              var cvs = document.createElement('canvas');
              cvs.width = source_img_obj.naturalWidth;
              cvs.height = source_img_obj.naturalHeight;
+             console.log(cvs.width, cvs.height, source_img_obj.width);
              var ctx = cvs.getContext("2d").drawImage(source_img_obj, 0, 0);
              var newImageData = cvs.toDataURL(mime_type, quality/100);
+             console.log('data URL:', newImageData);
              var result_image_obj = new Image();
              result_image_obj.src = newImageData;
              return result_image_obj;

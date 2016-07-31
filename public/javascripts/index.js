@@ -22,6 +22,9 @@ window.onload = function() {
 
   function set_image_view(url) {
     let imageElement = document.getElementById('ocr');
+    imageElement.onload = function() {
+      console.log(this.naturalHeight);
+    };
     imageElement.src = url;
   }
 
@@ -49,9 +52,13 @@ window.onload = function() {
       //first get the image element
       //second call JIC api
       let imageElement = document.getElementById('ocr');
+
+      // warning!: there is a bug that naturalWidth
+      // and naturalHeight could be 0, please refer to
+      // https://developer.mozilla.org/en/docs/Web/API/HTMLImageElement
       let resultImageObject = jic.compress(imageElement, 50, 'jpg');
-      console.log(resultImageObject.naturalWidth, resultImageObject.naturalHeight);
-      set_image_view(resultImageObject.src);
+      //console.log(resultImageObject.naturalWidth, resultImageObject.naturalHeight);
+      //set_image_view(resultImageObject.src);
 
       // commented out temparerily
       // let socketioClientManager = new SocketioClientManager();
