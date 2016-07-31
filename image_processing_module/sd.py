@@ -4,6 +4,8 @@
 import cv2
 import numpy as np
 import zerorpc
+from struct import *
+import sys
 
 
 def gray(im):
@@ -141,5 +143,11 @@ if __name__ == '__main__':
             print('type:', type(tostring), 'len:', len(tostring))
             f.write(tostring)
         print tostring,
+
+        # if sys.platform == 'win32':
+        #     import os
+        #     import msvcrt
+        #     msvcrt.setmode(sys.stdout.fileno(), os.O_BINARY)
+        sys.stdout.write(tostring)
 
     test()
