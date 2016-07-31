@@ -31,8 +31,7 @@ Although the text recognition is purely done on browser by tesseract.js and a we
 
 # Test
 ### There is no test.
-I heard of Test Driven Development. I heard of behavioral test vs. implementation test. I have never done them.
-That said, I'm just a newbie developer.
+Yeah, I know.
 
 # To do, I re-evaluated my priorities.
 1. make sure python module can send a complete image back to NodeJS 
