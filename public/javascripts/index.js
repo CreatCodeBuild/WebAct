@@ -43,7 +43,8 @@ window.onload = function() {
   /* start 开始 */
   Inputs.select_file(element, function(err, file, url) {
     if(err === undefined) {
-      console.log(file, file.size);
+      console.log(file)
+      console.log(file.size);
       set_image_view(url);
       // process_image();
 
@@ -51,20 +52,20 @@ window.onload = function() {
       //compress the iamge
       //first get the image element
       //second call JIC api
-      let imageElement = document.getElementById('ocr');
+      //let imageElement = document.getElementById('ocr');
 
       // warning!: there is a bug that naturalWidth
       // and naturalHeight could be 0, please refer to
       // https://developer.mozilla.org/en/docs/Web/API/HTMLImageElement
-      let resultImageObject = jic.compress(imageElement, 50, 'jpg');
+      //let resultImageObject = jic.compress(imageElement, 50, 'jpg');
       //console.log(resultImageObject.naturalWidth, resultImageObject.naturalHeight);
       //set_image_view(resultImageObject.src);
 
       // commented out temparerily
-      // let socketioClientManager = new SocketioClientManager();
-      // console.log('let socketioClientManager = new SocketioClientManager()');
-      // SocketioClientManager.emit_file_stream(file);
-      // console.log('done?!');
+       let socketioClientManager = new SocketioClientManager();
+       console.log('let socketioClientManager = new SocketioClientManager()');
+       SocketioClientManager.emit_file_stream(file);
+       console.log('done?!');
     } else {
       console.log(err);
     }

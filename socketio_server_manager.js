@@ -38,34 +38,49 @@ class SocketioServerManager {
 				//need to figure out the stream api first
 				// stream.pipe(fs.createWriteStream('temp.jpg'));
 				var bufferArray = [];
+				var totalLength = 0;
 				stream.on('data', function(data) {
-					console.log(data.length);
+					totalLength += data.length;
+					console.log('on data:', data.length);
 					bufferArray.push(data);
 				});
 				stream.on('end', function() {
-					console.log(bufferArray.length);
+					console.log('on end:', bufferArray.length);
+					console.log('on end:', totalLength);
 					let results = [];
-					zeroClient.process_image(bufferArray, function(error, result) {
-						// console.log(typeof result);
+					zeroClient.process_image(bufferArray, function(error, result, more) {
+						console.log(' error type:', typeof error);
+						console.log('result type:', typeof result);
+						console.log('  more type:', typeof more);
 						if(result === undefined) {
-							console.log(results.length);
-							let res = results.join('');
-							console.log('result string length:', res.length);
-							console.log('process_image end');
-
-							//convert string to blob
-							let bytes = new Uint8Array(res.length);
-							for(let i = 0; i < res.length; i++) {
-								bytes[i] = res.charCodeAt(i);
-							}
-
-							//emit a event with bytes
-							//need to use NodeJS Event Emitter or something
-							//after emit this event, handle this event
-							//send back bytes to browser end
-							socketEventEmitter.emit(EVENT.PROCESSED_IMAGE, bytes);
+							console.log(error);
+							//console.log(results.length);
+							//let res = results.join('');
+							//console.log('result string length:', res.length);
+							//console.log('process_image end');
+              //
+							////convert string to blob
+							//let bytes = new Uint8Array(res.length);
+							//for(let i = 0; i < res.length; i++) {
+							//	bytes[i] = res.charCodeAt(i);
+							//}
+              //
+							////emit a event with bytes
+							////need to use NodeJS Event Emitter or something
+							////after emit this event, handle this event
+							////send back bytes to browser end
+							//socketioEventEmitter.emit(EVENT.PROCESSED_IMAGE, bytes);
 						} else {
 							// console.log(typeof result);
+							console.log(error);
+							console.log(result.length);
+							let size = 0;
+							for(let i = 0; i < result.length; i++) {
+								size += result[i].length;
+								console.log(result[i].length);
+							}
+							console.log('total size:', size);
+							console.log(more.length);
 							results.push(result);
 						}
 					});
