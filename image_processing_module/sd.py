@@ -142,7 +142,7 @@ if __name__ == '__main__':
     # cv2.imshow('', threshed)
     # cv2.waitKey()
 
-    retval, buffer_of_image = cv2.imencode('.jpg', threshed, [cv2.IMWRITE_JPEG_QUALITY, 100])
+    retval, buffer_of_image = cv2.imencode('.jpg', threshed)
     print(retval)
 
     print('type:', type(buffer_of_image), 'len:', len(buffer_of_image))  # debug
@@ -150,20 +150,23 @@ if __name__ == '__main__':
     # need to convert numpy ndarray to python list
     # or any zerorpc seriallizable object
     # int8 list?
-    tostring = buffer_of_image.tostring()
+    data = np.array(buffer_of_image)
+    tostring = data.tostring()
+    # tostring = buffer_of_image.tostring()
 
-    with open('temp.jpg', 'w') as f:
-        f.write(buffer_of_image)
+    with open('temp.jpg', 'wb') as f:
+        print('type:', type(tostring), 'len:', len(tostring))
+        f.write(tostring)
 
     # Close object and discard memory buffer --
     # .getvalue() will now raise an exception.
     # output.close()
 
     #decode from jpeg format
-    decimg = cv2.imdecode(buffer_of_image,1)
+    decimg = cv2.imdecode(buffer_of_image, 1)
 
     cv2.imshow('Source Image', threshed)
     cv2.imshow('Decoded image', decimg)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
-
+    # cv2.imwrite()
