@@ -49,11 +49,11 @@ window.onload = function() {
       //first get the image element
       //second call JIC api
       let imageElement = document.getElementById('ocr');
-      let resultImageObject = jic.compress(imageElement, 50, 'jpeg');
-      console.log(resultImageObject);
+      let resultImageObject = jic.compress(imageElement, 50, 'jpg');
+      console.log(resultImageObject.naturalWidth, resultImageObject.naturalHeight);
       set_image_view(resultImageObject.src);
 
-      // commented out temperarily
+      // commented out temparerily
       // let socketioClientManager = new SocketioClientManager();
       // console.log('let socketioClientManager = new SocketioClientManager()');
       // SocketioClientManager.emit_file_stream(file);

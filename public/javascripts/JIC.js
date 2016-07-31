@@ -31,7 +31,7 @@ var jic = {
                 mime_type = "image/png";
              }
              
-
+             console.log(source_img_obj);
              var cvs = document.createElement('canvas');
              cvs.width = source_img_obj.naturalWidth;
              cvs.height = source_img_obj.naturalHeight;
