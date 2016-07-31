@@ -34,8 +34,7 @@ Although the text recognition is purely done on browser by tesseract.js and a we
 I heard of Test Driven Development. I heard of behavioral test vs. implementation test. I have never done them.
 That said, I'm just a newbie developer.
 
-# To do
-I re-evaluated my priorities.
+# To do, I re-evaluated my priorities.
 1. make sure python module can send a complete image back to NodeJS 
    and NodeJS can send a complete file/image back to browser
       Very likely that I am doing something terribly wrong on opencv side.
