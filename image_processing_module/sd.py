@@ -6,6 +6,7 @@ import numpy as np
 import zerorpc
 from struct import *
 import sys
+import io
 
 
 def gray(im):
@@ -66,9 +67,9 @@ def remove_lines(threshed_image):
 
 def string_to_list(string):
     _list = []
-    for i in range(0, len(string), 16384):
-        if i+16384 <= len(string):
-            _list.append(string[i:i+16384])
+    for i in range(0, len(string), 8192):
+        if i+8192 <= len(string):
+            _list.append(string[i:i+8192])
         else:
             _list.append(string[i:])
     if len(string) != sum([len(x) for x in _list]):
@@ -111,6 +112,8 @@ class StreamingRPC():
         tostring = buffer_of_image.tostring()
         _list = string_to_list(tostring)
         print('len:', len(tostring), len(_list))
+        for s in _list:
+            print(len(s))
         return _list
 
 
@@ -121,7 +124,7 @@ def server_up():
 
 
 if __name__ == '__main__':
-    # server_up()
+    server_up()
 
     def test():
         # debug purpose
@@ -139,7 +142,7 @@ if __name__ == '__main__':
 
         tostring = buffer_of_image.tostring()  # maybe too lines of buffer reshaping are redundant, maybe
 
-        with open('temp.jpg', 'wb') as f:
+        with io.open(sys.stdout, 'w+b') as f:
             print('type:', type(tostring), 'len:', len(tostring))
             f.write(tostring)
         print tostring,
@@ -148,6 +151,6 @@ if __name__ == '__main__':
         #     import os
         #     import msvcrt
         #     msvcrt.setmode(sys.stdout.fileno(), os.O_BINARY)
-        sys.stdout.write(tostring)
+        # sys.stdout.write(tostring)
 
-    test()
+    # test()
