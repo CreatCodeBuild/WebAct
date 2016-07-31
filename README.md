@@ -35,7 +35,10 @@ I heard of Test Driven Development. I heard of behavioral test vs. implementatio
 That said, I'm just a newbie developer.
 
 # To do
-1. refine the socketio module and apis
-2. complete the python nodejs zerorpc part
-3. browser side image compression
-4. browser side semantic checking
+I re-evaluated my priorities.
+1. make sure python module can send a complete image back to NodeJS 
+   and NodeJS can send a complete file/image back to browser
+      Very likely that I am doing something terribly wrong on opencv side.
+2. browser side semantic checking
+3. browser side image compression, to make it faster
+4. refine the socketio module and apis, make the code more maintable if I have enough time
