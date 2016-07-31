@@ -113,13 +113,10 @@ class StreamingRPC():
         threshed = process_an_image(image)
         remove_lines(threshed)
 
-        retval, buffer_of_image = cv2.imencode('.jpg', threshed)
+        ret, buffer_of_image = cv2.imencode('.jpg', threshed)
 
         print('type:', type(buffer), 'len:', len(buffer))  # debug
 
-        # need to convert numpy ndarray to python list
-        # or any zerorpc seriallizable object
-        # int8 list?
         tostring = buffer_of_image.tostring()
         print('len:', len(tostring))
         return tostring
@@ -132,41 +129,26 @@ def server_up():
 
 
 if __name__ == '__main__':
-    # server_up()
+    server_up()
 
-    # debug purpose
-    # process the received image
-    image = cv2.imread('demo4.jpg')
-    threshed = process_an_image(image)
-    remove_lines(threshed)
-    # cv2.imshow('', threshed)
-    # cv2.waitKey()
+    def test():
+        # debug purpose
+        # process the received image
+        image = cv2.imread('demo4.jpg')
+        threshed = process_an_image(image)
+        remove_lines(threshed)
+        # cv2.imshow('', threshed)
+        # cv2.waitKey()
 
-    retval, buffer_of_image = cv2.imencode('.jpg', threshed)
-    print(retval)
+        ret, buffer_of_image = cv2.imencode('.jpg', threshed)
+        print(ret)
 
-    print('type:', type(buffer_of_image), 'len:', len(buffer_of_image))  # debug
+        print('type:', type(buffer_of_image), 'len:', len(buffer_of_image))  # debug
 
-    # need to convert numpy ndarray to python list
-    # or any zerorpc seriallizable object
-    # int8 list?
-    data = np.array(buffer_of_image)
-    tostring = data.tostring()
-    # tostring = buffer_of_image.tostring()
+        tostring = buffer_of_image.tostring()  # maybe too lines of buffer reshaping are redundant, maybe
 
-    with open('temp.jpg', 'wb') as f:
-        print('type:', type(tostring), 'len:', len(tostring))
-        f.write(tostring)
+        with open('temp.jpg', 'wb') as f:
+            print('type:', type(tostring), 'len:', len(tostring))
+            f.write(tostring)
 
-    # Close object and discard memory buffer --
-    # .getvalue() will now raise an exception.
-    # output.close()
-
-    #decode from jpeg format
-    decimg = cv2.imdecode(buffer_of_image, 1)
-
-    cv2.imshow('Source Image', threshed)
-    cv2.imshow('Decoded image', decimg)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
-    # cv2.imwrite()
+    # test()
