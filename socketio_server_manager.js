@@ -1,16 +1,21 @@
 var fs = require('fs');
 var zeroClient = require('./rpc');
 const myEvent = require('./events');
+const socketio = require('socket.io');
+var ss = require('socket.io-stream');
+
 
 EVENT = myEvent.EVENT;
 emitter = myEvent.emitter;
 
 
 const TAG = 'SocketioServerManager';
-class SocketioServerManager {
-	static init(server) {
-		var io = require('socket.io')(server);
-		var ss = require('socket.io-stream');
+
+
+// am migrating to module pattern, wait...
+function SocketioServerManager {
+	function init(server) {
+		var io = socketio(server);
 		console.log('init everything');
 		io.on('connection', function(socket) {
 			console.log('on connection');
@@ -38,6 +43,8 @@ class SocketioServerManager {
 			});
 		});
 	}
+
+
 }
 
 

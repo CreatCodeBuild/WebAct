@@ -1,10 +1,11 @@
 /*
   Define all events which are used in this project
-  定义所有本项目使用的事件
+  定义所有本项目使用的事件，和相关监听器
  */
 
 const EventEmitter = require('events');
-const zeroClient = require('./rpc'); 
+const zeroClient = require('./rpc');
+const socketioManager = require('./socketio_server_manager');
 
 var EVENT = {
 	FILE_UPLOAD: 'file upload',
@@ -12,7 +13,8 @@ var EVENT = {
   RECEIVED_FILE_FROM_BROWSER: 'received file from browser',
 	PROCESSED_IMAGE: 'processed image',
   SEND_IMAGE_TO_PYTHON: 'send image to python',
-  RECEIVED_IMAGE_FROM_PYTHON: 'received image from python'
+  RECEIVED_IMAGE_FROM_PYTHON: 'received image from python',
+  SEND_IMAGE_TO_BROWSER: 'send image to browser'
 }
 
 class MyEventEmitter extends EventEmitter {}
@@ -27,8 +29,7 @@ eventEmitter.on(EVENT.DONE_UPLOAD, function(bytes) {
 });
 
 eventEmitter.on(EVENT.RECEIVED_FILE_FROM_BROWSER, function(bufferArray) {
-  let results = [];
-  zeroClient.process_image(bufferArray, /* a function here */);
+  zeroClient.process_image(bufferArray);
 })
 
 eventEmitter.on(EVENT.PROCESSED_IMAGE, function(bytes) {
@@ -45,6 +46,10 @@ eventEmitter.on(EVENT.SEND_IMAGE_TO_PYTHON, function(bytes) {
 eventEmitter.on(EVENT.RECEIVED_IMAGE_FROM_PYTHON, function(bytes) {
   //send bytes back to browser
 });
+
+eventEmitter.on(EVENT.SEND_IMAGE_TO_BROWSER, function(dataToSend) {
+  socketioManager
+})
 
 var publicAPI = {
   EVENT: EVENT,
