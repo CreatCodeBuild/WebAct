@@ -1,8 +1,3 @@
-var zerorpc = require('zerorpc');
-var client = new zerorpc.Client();
-const EVENT = require('./events');
-client.connect('tcp://127.0.0.1:8888')
-const myEvent = require('./events');
 
 
 /* Note: 2016/07/25, Monday, 00:55
@@ -17,20 +12,33 @@ const myEvent = require('./events');
   Python OpenCV can't write correct image buffer into stdout.
 */
 
-// should change this to module pattern !!!
+console.log('rpc.js');
+function zeroClient() {
+  console.log('rpc.js zeroClient');
+  var zerorpc = require('zerorpc');
 
-var zeroClient = {
+  var client = new zerorpc.Client();
+  client.connect('tcp://127.0.0.1:8888');
+
+  var myEmitter;
+  var EVENT;
+
+  function init(emitter, allEvents) {
+    myEmitter = emitter;
+    EVENT = allEvents;
+  }
+
   /*
     image_buffer: file, string buffer, or similar
     callback: should be a function that handles res at the caller level
   */
-  process_image: function(image_buffer) {
+  function process_image(image_buffer) {
     client.invoke('process_image', image_buffer, function(error, res, more) {
-        this.process_image_callback(error, res, more);
+        process_image_callback(error, res, more);
     });
-  },
+  }
 
-  process_image_callback: function(error, result, more) {
+  function process_image_callback(error, result, more) {
 
     console.log(' error type:', typeof error);
     console.log('result type:', typeof result);
@@ -38,20 +46,27 @@ var zeroClient = {
     if(result === undefined || error !== undefined) { //error
       console.log(error);
     } else {
-      console.log('result length:'. result.length);
+      console.log('result length:', result.length);
       let results = [];
       let size = 0;
-      for(let i = 0; i < result.length; i++) {
+      let i = 0;
+      for(i = 0; i < result.length; i++) {
         size += result[i].length;
         console.log(result[i].length);
       }
       console.log('total size:', size);
       results.push(result);
       // separating of concerns, let event handler to decide what to do
-      myEvent.emitter.emit(myEvent.EVENT.SEND_IMAGE_TO_BROWSER, results);
+      myEmitter.emit(EVENT.SEND_IMAGE_TO_BROWSER, results);
     }
   }
-};
+
+  console.log('rpc.js zeroClient return');
+  return {
+    init: init,
+    process_image: process_image
+  }
+}
 
 
-module.exports = zeroClient;
+module.exports.publicAPI = zeroClient();

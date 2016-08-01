@@ -1,33 +1,33 @@
-var fs = require('fs');
-var zeroClient = require('./rpc');
-const myEvent = require('./events');
-const socketio = require('socket.io');
-var ss = require('socket.io-stream');
+function SocketioServerManager() {
+  console.log('SocketioServerManager module');
+
+  var fs = require('fs');
+  const socketio = require('socket.io');
+  var ss = require('socket.io-stream');
 
 
-EVENT = myEvent.EVENT;
-emitter = myEvent.emitter;
+  var EVENT;
+  var emitter;
 
 
-
-// am migrating to module pattern, wait...
-function SocketioServerManager {
-
-	const TAG = 'SocketioServerManager';
+  const TAG = 'SocketioServerManager';
 
 	var httpServer;
 	var io;
 	var ssSocket;
 	var initialized = false;
 
-	function init(server) {
+	function init(server, eventManager) {
 		console.log(TAG, 'init everything');
 		httpServer = server;
+    EVENT = eventManager.EVENT;
+    emitter = eventManager.emitter;
 		io = socketio(server);
 		registerEvents();
 	}
 
 	function registerEvents() {
+    console.log(TAG, 'start to registerEvents');
 		io.on('connection', function(socket) {
 			console.log(TAG, 'on connection');
 			ssSocket = ss(socket);
@@ -68,8 +68,10 @@ function SocketioServerManager {
 		send_image_to_browser: send_image_to_browser
 	};
 
+
+  console.log('SocketioServerManager module end');
 	return publicAPI;
 }
 
 
-module.exports = SocketioServerManager();
+module.exports.publicAPI = SocketioServerManager();
