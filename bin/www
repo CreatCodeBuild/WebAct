@@ -20,8 +20,8 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
-var SocketioServerManager = require('../socketio_server_manager');
-SocketioServerManager.init(server);
+var socketioServerManager = require('../socketio_server_manager');
+socketioServerManager.init(server);
 
 /**
  * Listen on provided port, on all network interfaces.

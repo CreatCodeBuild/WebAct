@@ -8,7 +8,7 @@ const zeroClient = require('./rpc');
 const socketioManager = require('./socketio_server_manager');
 
 var EVENT = {
-	FILE_UPLOAD: 'file upload',
+	FILE_UPLOAD: 'file upload', //need change to 'uploading file'
 	DONE_UPLOAD: 'done upload',
   RECEIVED_FILE_FROM_BROWSER: 'received file from browser',
 	PROCESSED_IMAGE: 'processed image',
@@ -48,7 +48,7 @@ eventEmitter.on(EVENT.RECEIVED_IMAGE_FROM_PYTHON, function(bytes) {
 });
 
 eventEmitter.on(EVENT.SEND_IMAGE_TO_BROWSER, function(dataToSend) {
-  socketioManager
+  socketioManager.send_image_to_browser(dataToSend);
 })
 
 var publicAPI = {

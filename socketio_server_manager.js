@@ -9,43 +9,67 @@ EVENT = myEvent.EVENT;
 emitter = myEvent.emitter;
 
 
-const TAG = 'SocketioServerManager';
-
 
 // am migrating to module pattern, wait...
 function SocketioServerManager {
+
+	const TAG = 'SocketioServerManager';
+
+	var httpServer;
+	var io;
+	var ssSocket;
+	var initialized = false;
+
 	function init(server) {
-		var io = socketio(server);
-		console.log('init everything');
+		console.log(TAG, 'init everything');
+		httpServer = server;
+		io = socketio(server);
+		registerEvents();
+	}
+
+	function registerEvents() {
 		io.on('connection', function(socket) {
-			console.log('on connection');
+			console.log(TAG, 'on connection');
+			ssSocket = ss(socket);
+			initialized = true;
 			// todo:
 			// need to document that stream and additionalData are
 			// in below callback function
-			ss(socket).on(EVENT.FILE_UPLOAD, function(stream, additionalData) {
-				console.log('on EVENT.FILE_UPLOAD');
-				//need to figure out the actually api use
-				//zero rpc might be a great idea
-				//need to figure out the stream api first
-				// stream.pipe(fs.createWriteStream('temp.jpg'));
+			ssSocket.on(EVENT.FILE_UPLOAD, function(stream, additionalData) {
+				console.log(TAG, 'on EVENT.FILE_UPLOAD');
 				var bufferArray = [];
 				var totalLength = 0;
 				stream.on('data', function(data) {
+					console.log(TAG, 'on data:', data.length);
 					totalLength += data.length;
-					console.log('on data:', data.length);
 					bufferArray.push(data);
 				});
 				stream.on('end', function() {
-					console.log('on end:', bufferArray.length);
-					console.log('on end:', totalLength);
+					console.log(TAG, 'on end');
+					console.log(TAG, 'bufferArray.length:', bufferArray.length);
+					console.log(TAG, '       totalLength:', totalLength);
 					emitter.emit(EVENT.RECEIVED_FILE_FROM_BROWSER, bufferArray);
 				});
 			});
 		});
 	}
 
+	function send_image_to_browser(dataToSend) {
+		if(initialized) {
+			ssScoket.emit('profile-image', stream, {name: filename});
+			fs.createReadStream(filename).pipe(stream);
+		} else {
+			console.log(TAG, 'not initialized');
+		}
+	}
 
+	let publicAPI = {
+		init: init,
+		send_image_to_browser: send_image_to_browser
+	};
+
+	return publicAPI;
 }
 
 
-module.exports = SocketioServerManager;
+module.exports = SocketioServerManager();
