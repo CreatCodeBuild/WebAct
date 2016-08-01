@@ -61,11 +61,8 @@ window.onload = function() {
       //console.log(resultImageObject.naturalWidth, resultImageObject.naturalHeight);
       //set_image_view(resultImageObject.src);
 
-      // commented out temparerily
-       let socketioClientManager = new SocketioClientManager();
-       console.log('let socketioClientManager = new SocketioClientManager()');
-       SocketioClientManager.emit_file_stream(file);
-       console.log('done?!');
+      socketioManager.emit_file_stream(file);
+      console.log('done?!');
     } else {
       console.log(err);
     }
