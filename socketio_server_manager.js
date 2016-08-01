@@ -56,10 +56,12 @@ function SocketioServerManager() {
 
 	function send_image_to_browser(dataToSend) {
 		if(initialized) {
-			ssScoket.emit('profile-image', stream, {name: filename});
-			fs.createReadStream(filename).pipe(stream);
+      //todo: not sure if this works, need to check docs
+      var stream = ss.createStream();
+      stream.write(dataToSend);
+			ssSocket.emit(EVENT.SEND_IMAGE_TO_BROWSER, dataToSend);
 		} else {
-			console.log(TAG, 'not initialized');
+			console.log(TAG, 'ssSocket not initialized');
 		}
 	}
 
