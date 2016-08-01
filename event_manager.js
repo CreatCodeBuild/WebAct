@@ -1,6 +1,8 @@
 /*
   Define all events which are used in this project
   定义所有本项目使用的事件，和相关监听器
+
+  Now this module acts like a central access point for other modules
  */
 
 console.log('events.js');
@@ -26,6 +28,8 @@ function EventManager() {
 
   function init(httpServer) {
     server = httpServer;
+    zeroClient.init(publicAPI.emitter, publicAPI.EVENT);
+    socketioManager.init(server, publicAPI);
   }
 
   class MyEventEmitter extends EventEmitter {}
@@ -68,9 +72,6 @@ function EventManager() {
     EVENT: EVENT,
     emitter: eventEmitter
   };
-
-  zeroClient.init(publicAPI.emitter, publicAPI.EVENT);
-  socketioManager.init(server, publicAPI);
 
   console.log('My Event Module Return');
   return publicAPI;
