@@ -41,9 +41,9 @@ window.onload = function() {
   /* variable declarations and assignments end 变量声明和赋值结束 */
 
   /* start 开始 */
-  Inputs.select_file(element, function(err, file, url) {
+  inputs.select_file(element, function(err, file, url) {
     if(err === undefined) {
-      console.log(file)
+      console.log(file);
       console.log(file.size);
       set_image_view(url);
       // process_image();

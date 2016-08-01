@@ -1,6 +1,7 @@
-let InputsTag = 'Inputs::';
-class Inputs {
-  static select_file(element, on_file_selected) {
+var inputs = (function Inputs() {
+  let InputsTag = 'Inputs::';
+
+  function select_file(element, on_file_selected) {
     element.addEventListener('change', function(event) {
       console.log(InputsTag, event);
       let file = event.target.files[0];
@@ -16,4 +17,8 @@ class Inputs {
       on_file_selected(error, file, url);
     });
   }
-}
+
+  return {
+    select_file: select_file
+  }
+})();

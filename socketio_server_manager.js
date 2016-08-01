@@ -55,7 +55,9 @@ function SocketioServerManager() {
 	}
 
 	function send_image_to_browser(dataToSend) {
-		if(initialized) {
+    console.log(TAG, 'send_image_to_browser');
+    if(initialized) {
+      console.log(TAG, 'ssSocket is initialized');
       //todo: not sure if this works, need to check docs
       var stream = ss.createStream();
       stream.write(dataToSend);

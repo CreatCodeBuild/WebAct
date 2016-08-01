@@ -22,7 +22,7 @@ class FileIt {
           server_response_callback('request.status is not 200. It is '+request.status, request.response);
         }
       }
-    }
+    };
     request.open('POST', rest_api_route, true);
     request.setRequestHeader('Content-Type', 'multipart/form-data');
     request.send({'file': file});

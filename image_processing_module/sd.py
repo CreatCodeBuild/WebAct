@@ -102,8 +102,8 @@ class StreamingRPC():
         # process the received image
         threshed = process_an_image(grayscale_image)
         remove_lines(threshed)
-        cv2.imshow('', threshed)
-        cv2.waitKey()
+        # cv2.imshow('', threshed)
+        # cv2.waitKey()
 
         ret, buffer_of_image = cv2.imencode('.jpg', threshed)
 
