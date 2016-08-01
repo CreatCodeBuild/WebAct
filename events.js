@@ -3,11 +3,13 @@
   定义所有本项目使用的事件
  */
 
- const EventEmitter = require('events');
+const EventEmitter = require('events');
+const zeroClient = require('./rpc'); 
 
 var EVENT = {
 	FILE_UPLOAD: 'file upload',
 	DONE_UPLOAD: 'done upload',
+  RECEIVED_FILE_FROM_BROWSER: 'received file from browser',
 	PROCESSED_IMAGE: 'processed image',
   SEND_IMAGE_TO_PYTHON: 'send image to python',
   RECEIVED_IMAGE_FROM_PYTHON: 'received image from python'
@@ -23,6 +25,11 @@ eventEmitter.on(EVENT.FILE_UPLOAD, function(bytes) {
 eventEmitter.on(EVENT.DONE_UPLOAD, function(bytes) {
   //send image to python?
 });
+
+eventEmitter.on(EVENT.RECEIVED_FILE_FROM_BROWSER, function(bufferArray) {
+  let results = [];
+  zeroClient.process_image(bufferArray, /* a function here */);
+})
 
 eventEmitter.on(EVENT.PROCESSED_IMAGE, function(bytes) {
 	//send bytes back to browser

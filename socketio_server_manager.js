@@ -1,9 +1,9 @@
 var fs = require('fs');
 var zeroClient = require('./rpc');
-const Event = require('./events')
+const myEvent = require('./events');
 
-
-
+EVENT = myEvent.EVENT;
+emitter = myEvent.emitter;
 
 
 const TAG = 'SocketioServerManager';
@@ -33,32 +33,7 @@ class SocketioServerManager {
 				stream.on('end', function() {
 					console.log('on end:', bufferArray.length);
 					console.log('on end:', totalLength);
-					let results = [];
-					zeroClient.process_image(bufferArray, function(error, result, more) {
-						console.log(' error type:', typeof error);
-						console.log('result type:', typeof result);
-						console.log('  more type:', typeof more);
-						if(result === undefined) { //error
-							console.log(error);
-							//emit a event with bytes
-							//need to use NodeJS Event Emitter or something
-							//after emit this event, handle this event
-							//send back bytes to browser end
-							//socketioEventEmitter.emit(EVENT.PROCESSED_IMAGE, bytes);
-						} else {
-							// console.log(typeof result);
-							console.log(error);
-							console.log(result.length);
-							let size = 0;
-							for(let i = 0; i < result.length; i++) {
-								size += result[i].length;
-								console.log(result[i].length);
-							}
-							console.log('total size:', size);
-							console.log(more.length);
-							results.push(result);
-						}
-					});
+					emitter.emit(EVENT.RECEIVED_FILE_FROM_BROWSER, bufferArray);
 				});
 			});
 		});

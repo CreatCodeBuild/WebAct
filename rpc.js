@@ -16,15 +16,43 @@ client.connect('tcp://127.0.0.1:8888')
   Python OpenCV can't write correct image buffer into stdout.
 */
 
+// should change this to module pattern !!!
+
 var zeroClient = {
   /*
     image_buffer: file, string buffer, or similar
     callback: should be a function that handles res at the caller level
   */
-  process_image: function(image_buffer, callback) {
+  process_image: function(image_buffer) {
     client.invoke('process_image', image_buffer, function(error, res, more) {
-        callback(error, res, more);
+        this.process_image_callback(error, res, more);
     });
+  },
+
+  process_image_callback: function(error, result, more) {
+    console.log(' error type:', typeof error);
+    console.log('result type:', typeof result);
+    console.log('  more type:', typeof more);
+    if(result === undefined) { //error
+      console.log(error);
+      //emit a event with bytes
+      //need to use NodeJS Event Emitter or something
+      //after emit this event, handle this event
+      //send back bytes to browser end
+      //socketioEventEmitter.emit(EVENT.PROCESSED_IMAGE, bytes);
+    } else {
+      // console.log(typeof result);
+      console.log(error);
+      console.log(result.length);
+      let size = 0;
+      for(let i = 0; i < result.length; i++) {
+        size += result[i].length;
+        console.log(result[i].length);
+      }
+      console.log('total size:', size);
+      console.log(more.length);
+      results.push(result);
+    }
   }
 };
 
