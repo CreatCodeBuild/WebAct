@@ -1,26 +1,31 @@
-const EVENT = {
-	FILE_UPLOAD: 'file upload',
-	DONE_UPLOAD: 'done upload',
-	PROCESSED_IMAGE: 'processed image'
-}
+socketioManager = (function SocketioClientManager() {
+	var TAG = 'SocketioClientManager';
 
-var socket = io.connect('http://localhost:8080');
+	var EVENT = {
+		FILE_UPLOAD: 'file upload', //need change to 'uploading file'
+		DONE_UPLOAD: 'done upload',
+		RECEIVED_FILE_FROM_BROWSER: 'received file from browser',
+		PROCESSED_IMAGE: 'processed image',
+		SEND_IMAGE_TO_PYTHON: 'send image to python',
+		RECEIVED_IMAGE_FROM_PYTHON: 'received image from python',
+		SEND_IMAGE_TO_BROWSER: 'send image to browser'
+	};
 
-/* Client Socket Manager */
-class SocketioClientManager {
+	var socket = io.connect('http://localhost:8080');
+	var ssSocket = ss(socket);
 
-	static emit_file_stream(file) {
-		console.log('emit_file_stream');
+	/* Client Socket Manager */
+	function emit_file_stream(file) {
+		console.log('emit_file_stream, upload a file to the server.');
 		var stream = ss.createStream();
-    // upload a file to the server.
-    ss(socket).emit(EVENT.FILE_UPLOAD, stream, {size: file.size});
+		ssSocket.emit(EVENT.FILE_UPLOAD, stream, {size: file.size});
     ss.createBlobReadStream(file).pipe(stream);
 	}
 
 	/*
 		register all on-event callbacks
 	*/
-	static init() {
+	function init() {
 		socket.on(EVENT.DONE_UPLOADING, function() {
 			// todo: implement it
 			console.log('EVENT.DONE_UPLOADING');
@@ -29,7 +34,16 @@ class SocketioClientManager {
 		socket.on(EVENT.PROCESSED_IMAGE, function() {
 			// todo: implement it
 			console.log('EVENT.PROCESSED_IMAGE');
-		})
+		});
+
+		ssSocket.on(EVENT.SEND_IMAGE_TO_BROWSER, function(stream, additionalData) {
+			console.log(TAG, EVENT.SEND_IMAGE_TO_BROWSER);
+			//todo: construct a image from stream
+		});
 	}
 
-}
+	return {
+		init: init,
+		emit_file_stream: emit_file_stream
+	}
+})();
