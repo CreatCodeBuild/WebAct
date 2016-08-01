@@ -1,5 +1,6 @@
 var zerorpc = require('zerorpc');
 var client = new zerorpc.Client();
+const EVENT = require('./events');
 client.connect('tcp://127.0.0.1:8888')
 
 
@@ -15,7 +16,7 @@ client.connect('tcp://127.0.0.1:8888')
   Python OpenCV can't write correct image buffer into stdout.
 */
 
-let zeroClient = {
+var zeroClient = {
   /*
     image_buffer: file, string buffer, or similar
     callback: should be a function that handles res at the caller level

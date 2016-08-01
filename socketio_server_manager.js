@@ -1,23 +1,9 @@
 var fs = require('fs');
 var zeroClient = require('./rpc');
-const EventEmitter = require('events');
-
-const EVENT = {
-	FILE_UPLOAD: 'file upload',
-	DONE_UPLOAD: 'done upload',
-	PROCESSED_IMAGE: 'processed image'
-};
+const Event = require('./events')
 
 
-class SocketioEventEmitter extends EventEmitter {}
 
-const socketioEventEmitter = new SocketioEventEmitter();
-socketioEventEmitter.on(EVENT.PROCESSED_IMAGE, function(bytes) {
-	//send bytes back to browser
-	//todo: implement it
-	//check out the socketio and socket stream api
-	//probably a change to refine the code
-});
 
 
 const TAG = 'SocketioServerManager';
@@ -52,23 +38,12 @@ class SocketioServerManager {
 						console.log(' error type:', typeof error);
 						console.log('result type:', typeof result);
 						console.log('  more type:', typeof more);
-						if(result === undefined) {
+						if(result === undefined) { //error
 							console.log(error);
-							//console.log(results.length);
-							//let res = results.join('');
-							//console.log('result string length:', res.length);
-							//console.log('process_image end');
-              //
-							////convert string to blob
-							//let bytes = new Uint8Array(res.length);
-							//for(let i = 0; i < res.length; i++) {
-							//	bytes[i] = res.charCodeAt(i);
-							//}
-              //
-							////emit a event with bytes
-							////need to use NodeJS Event Emitter or something
-							////after emit this event, handle this event
-							////send back bytes to browser end
+							//emit a event with bytes
+							//need to use NodeJS Event Emitter or something
+							//after emit this event, handle this event
+							//send back bytes to browser end
 							//socketioEventEmitter.emit(EVENT.PROCESSED_IMAGE, bytes);
 						} else {
 							// console.log(typeof result);
