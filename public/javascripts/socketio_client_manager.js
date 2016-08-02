@@ -38,9 +38,26 @@ socketioManager = (function SocketioClientManager() {
 
 		ssSocket.on(EVENT.SEND_IMAGE_TO_BROWSER, function(stream, additionalData) {
 			console.log(TAG, EVENT.SEND_IMAGE_TO_BROWSER);
-			//todo: construct a image from stream
 			console.log(TAG, 'typeof stream', typeof stream);
 			console.log(TAG, 'typeof stream', typeof additionalData);
+
+			var totalLength = 0;
+			var bufferArray = [];
+
+			stream.on('data', function(data) {
+				console.log(TAG, 'on data:', data.length);
+				totalLength += data.length;
+				bufferArray.push(data);
+			});
+
+			stream.on('end', function() {
+				console.log(TAG, 'on end');
+				console.log(TAG, 'bufferArray.length:', bufferArray.length);
+				console.log(TAG, '       totalLength:', totalLength);
+
+				//todo: construct a image from bufferArray
+				
+			});
 		});
 	}
 
