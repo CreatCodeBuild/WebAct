@@ -109,12 +109,18 @@ class StreamingRPC():
 
         print('type:', type(buffer_of_image), 'len:', len(buffer_of_image))  # debug
 
-        tostring = buffer_of_image.tostring()
-        _list = string_to_list(tostring)
-        print('len:', len(tostring), len(_list))
-        for s in _list:
-            print(len(s))
-        return _list
+        tostring = list((str(buffer_of_image.tostring())))
+        # _list = string_to_list(tostring)
+        print('type:', type(tostring))
+        print('len:', len(tostring))
+        # for s in _list:
+        #     print(len(s))
+        return tostring
+
+    def test(self, string):
+        print(len(string))
+        print(type(string))
+        return string
 
 
 def server_up():

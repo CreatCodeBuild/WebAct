@@ -49,20 +49,32 @@ function zeroClient() {
       console.log(error);
     } else {
       console.log('result length:', result.length);
-      let size = 0;
-      let i = 0;
-      for(i = 0; i < result.length; i++) {
-        size += result[i].length;
-        console.log(result[i].length);
-      }
-      console.log('total size:', size);
-      let resultCombine = result.join('');
-      console.log(TAG, '  resultCombine type', typeof resultCombine);
-      console.log(TAG, 'resultCombine.length', resultCombine.length);
+      //let size = 0;
+      //let i = 0;
+      //for(i = 0; i < result.length; i++) {
+      //  size += result[i].length;
+      //  console.log(result[i].length);
+      //}
+      //console.log('total size:', size);
+      //let resultCombine = result.join('');
+      //console.log(TAG, '  resultCombine type', typeof resultCombine);
+      //console.log(TAG, 'resultCombine.length', resultCombine.length);
       // separating of concerns, let event handler to decide what to do
-      myEmitter.emit(EVENT.SEND_IMAGE_TO_BROWSER, resultCombine);
+      //myEmitter.emit(EVENT.SEND_IMAGE_TO_BROWSER, resultCombine);
     }
   }
+
+  //test
+  //(function test() {
+  //  var array = [];
+  //  for (var i = 0; i < 1234567; i++) {
+  //    array.push('\r\n');
+  //  }
+  //  array = array.join('');
+  //  client.invoke('test', array, function (error, res, more) {
+  //    console.log(TAG, 'test length', res.length);
+  //  });
+  //})();
 
   console.log('rpc.js zeroClient return');
   return {
