@@ -38,8 +38,8 @@ socketioManager = (function SocketioClientManager() {
 
 		ssSocket.on(EVENT.SEND_IMAGE_TO_BROWSER, function(stream, additionalData) {
 			console.log(TAG, EVENT.SEND_IMAGE_TO_BROWSER);
-			console.log(TAG, 'typeof stream', typeof stream);
-			console.log(TAG, 'typeof stream', typeof additionalData);
+			console.log(TAG, '        typeof stream', typeof stream);
+			console.log(TAG, 'typeof additionalData', typeof additionalData);
 
 			var totalLength = 0;
 			var bufferArray = [];
@@ -56,7 +56,10 @@ socketioManager = (function SocketioClientManager() {
 				console.log(TAG, '       totalLength:', totalLength);
 
 				//todo: construct a image from bufferArray
-				
+				var buffer = bufferArray.join('');
+				var imageBlob = new Blob(buffer, {type: 'image/jpeg'});
+				var imageElement = document.getElementById('ocr');
+				imageElement.src = URL.createObjectURL(imageBlob);
 			});
 		});
 	}
