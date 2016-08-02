@@ -64,16 +64,16 @@ function zeroClient() {
   }
 
   //test
-  //(function test() {
-  //  var array = [];
-  //  for (var i = 0; i < 1234567; i++) {
-  //    array.push('\r\n');
-  //  }
-  //  array = array.join('');
-  //  client.invoke('test', array, function (error, res, more) {
-  //    console.log(TAG, 'test length', res.length);
-  //  });
-  //})();
+  (function test() {
+    var array = [];
+    for (var i = 0; i < 1234567; i++) {
+      array.push('\0');
+    }
+    array = array.join('');
+    client.invoke('test', array, function (error, res, more) {
+      console.log(TAG, 'test length', res.length);
+    });
+  })();
 
   console.log('rpc.js zeroClient return');
   return {

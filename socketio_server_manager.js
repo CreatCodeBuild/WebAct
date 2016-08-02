@@ -56,11 +56,16 @@ function SocketioServerManager() {
 		});
 	}
 
+	function write_to_disk(data) {
+		fs.writeFileSync('temp.jpg', data);
+	}
+
 	function send_image_to_browser(dataToSend) {
     console.log(TAG, 'send_image_to_browser');
     if(initialized) {
       console.log(TAG, 'mySocket is initialized');
 	    console.log(TAG, 'length', dataToSend.length);
+	    write_to_disk('好');
 			mySocket.emit(EVENT.SEND_IMAGE_TO_BROWSER, {data: dataToSend});
 		} else {
 			console.log(TAG, 'mySocket not initialized');
