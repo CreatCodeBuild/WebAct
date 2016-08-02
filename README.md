@@ -34,9 +34,6 @@ Although the text recognition is purely done on browser by tesseract.js and a we
 Yeah, I know.
 
 # To do, I re-evaluated my priorities.
-0. organize front end code, or I can't even keep developing
-1. make sure python module can send a complete image back to NodeJS 
-   and NodeJS can send a complete file/image back to browser
-      Very likely that I am doing something terribly wrong on opencv side.
+1. browser needs to construct an image from the string buffer it received from NodeJS
 2. browser side semantic checking
 3. browser side image compression, to make it faster
