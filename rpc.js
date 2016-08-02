@@ -14,6 +14,8 @@
 
 console.log('rpc.js');
 function zeroClient() {
+  var TAG = 'zeroClient';
+
   console.log('rpc.js zeroClient');
   var zerorpc = require('zerorpc');
 
@@ -47,7 +49,6 @@ function zeroClient() {
       console.log(error);
     } else {
       console.log('result length:', result.length);
-      let results = [];
       let size = 0;
       let i = 0;
       for(i = 0; i < result.length; i++) {
@@ -55,9 +56,11 @@ function zeroClient() {
         console.log(result[i].length);
       }
       console.log('total size:', size);
-      results.push(result);
+      let resultCombine = result.join('');
+      console.log(TAG, '  resultCombine type', typeof resultCombine);
+      console.log(TAG, 'resultCombine.length', resultCombine.length);
       // separating of concerns, let event handler to decide what to do
-      myEmitter.emit(EVENT.SEND_IMAGE_TO_BROWSER, results);
+      myEmitter.emit(EVENT.SEND_IMAGE_TO_BROWSER, resultCombine);
     }
   }
 

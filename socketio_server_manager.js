@@ -14,6 +14,7 @@ function SocketioServerManager() {
 
 	var httpServer;
 	var io;
+	var mySocket;
 	var ssSocket;
 	var initialized = false;
 
@@ -30,6 +31,7 @@ function SocketioServerManager() {
     console.log(TAG, 'start to registerEvents');
 		io.on('connection', function(socket) {
 			console.log(TAG, 'on connection');
+			mySocket = socket;
 			ssSocket = ss(socket);
 			initialized = true;
 			// todo:
@@ -57,13 +59,11 @@ function SocketioServerManager() {
 	function send_image_to_browser(dataToSend) {
     console.log(TAG, 'send_image_to_browser');
     if(initialized) {
-      console.log(TAG, 'ssSocket is initialized');
-      //todo: not sure if this works, need to check docs
-      var stream = ss.createStream();
-      stream.write(dataToSend);
-			ssSocket.emit(EVENT.SEND_IMAGE_TO_BROWSER, dataToSend);
+      console.log(TAG, 'mySocket is initialized');
+	    console.log(TAG, 'length', dataToSend.length);
+			mySocket.emit(EVENT.SEND_IMAGE_TO_BROWSER, {data: dataToSend});
 		} else {
-			console.log(TAG, 'ssSocket not initialized');
+			console.log(TAG, 'mySocket not initialized');
 		}
 	}
 

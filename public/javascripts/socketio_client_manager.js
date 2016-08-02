@@ -36,31 +36,18 @@ socketioManager = (function SocketioClientManager() {
 			console.log('EVENT.PROCESSED_IMAGE');
 		});
 
-		ssSocket.on(EVENT.SEND_IMAGE_TO_BROWSER, function(stream, additionalData) {
+		socket.on(EVENT.SEND_IMAGE_TO_BROWSER, function(receivedData) {
+			var buffer = receivedData.data;
+			var totalLength = buffer.length;
+
 			console.log(TAG, EVENT.SEND_IMAGE_TO_BROWSER);
-			console.log(TAG, '        typeof stream', typeof stream);
-			console.log(TAG, 'typeof additionalData', typeof additionalData);
+			console.log(TAG, 'typeof buffer', typeof buffer);
+			console.log(TAG, '  totalLength', totalLength);
 
-			var totalLength = 0;
-			var bufferArray = [];
-
-			stream.on('data', function(data) {
-				console.log(TAG, 'on data:', data.length);
-				totalLength += data.length;
-				bufferArray.push(data);
-			});
-
-			stream.on('end', function() {
-				console.log(TAG, 'on end');
-				console.log(TAG, 'bufferArray.length:', bufferArray.length);
-				console.log(TAG, '       totalLength:', totalLength);
-
-				//todo: construct a image from bufferArray
-				var buffer = bufferArray.join('');
-				var imageBlob = new Blob(buffer, {type: 'image/jpeg'});
-				var imageElement = document.getElementById('ocr');
-				imageElement.src = URL.createObjectURL(imageBlob);
-			});
+			//todo: construct a image from bufferArray
+			var imageBlob = new Blob([buffer], {type: 'image/jpeg'});
+			var imageElement = document.getElementById('ocr');
+			imageElement.src = URL.createObjectURL(imageBlob);
 		});
 	}
 
