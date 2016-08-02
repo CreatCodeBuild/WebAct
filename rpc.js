@@ -49,18 +49,17 @@ function zeroClient() {
       console.log(error);
     } else {
       console.log('result length:', result.length);
-      //let size = 0;
-      //let i = 0;
-      //for(i = 0; i < result.length; i++) {
-      //  size += result[i].length;
-      //  console.log(result[i].length);
-      //}
-      //console.log('total size:', size);
-      //let resultCombine = result.join('');
-      //console.log(TAG, '  resultCombine type', typeof resultCombine);
-      //console.log(TAG, 'resultCombine.length', resultCombine.length);
-      // separating of concerns, let event handler to decide what to do
-      //myEmitter.emit(EVENT.SEND_IMAGE_TO_BROWSER, resultCombine);
+      let size = 0;
+      let i = 0;
+      for(i = 0; i < result.length; i++) {
+        size += result[i].length;
+      }
+      console.log('total size:', size);
+      let resultCombine = result.join('');
+      console.log(TAG, '  resultCombine type', typeof resultCombine);
+      console.log(TAG, 'resultCombine.length', resultCombine.length);
+      //separating of concerns, let event handler to decide what to do
+      myEmitter.emit(EVENT.SEND_IMAGE_TO_BROWSER, resultCombine);
     }
   }
 
