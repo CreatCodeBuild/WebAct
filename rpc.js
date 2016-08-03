@@ -64,11 +64,8 @@ function zeroClient() {
       console.log(TAG, 'newBuffer size:', newBuffer.length);
       console.log(TAG, 'newBuffer byte length:', Buffer.byteLength(newBuffer, 'binary'));
 
-      //let resultCombine = result.join('');
-      //console.log(TAG, '  resultCombine type', typeof resultCombine);
-      //console.log(TAG, 'resultCombine.length', resultCombine.length);
       //separating of concerns, let event handler to decide what to do
-      //myEmitter.emit(EVENT.SEND_IMAGE_TO_BROWSER, resultCombine);
+      myEmitter.emit(EVENT.SEND_IMAGE_TO_BROWSER, newBuffer);
     }
   }
 
