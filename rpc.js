@@ -50,11 +50,14 @@ function zeroClient() {
     } else {
       console.log('result length:', result.length);
       let size = 0;
+      let byteSize = 0;
       let i = 0;
       for(i = 0; i < result.length; i++) {
         size += result[i].length;
+        byteSize += Buffer.byteLength(result[i]);
       }
-      console.log('total size:', size);
+      console.log('total      size:', size);
+      console.log('total byte size:', byteSize);
       let resultCombine = result.join('');
       console.log(TAG, '  resultCombine type', typeof resultCombine);
       console.log(TAG, 'resultCombine.length', resultCombine.length);

@@ -43,13 +43,18 @@ function SocketioServerManager() {
 				var totalLength = 0;
 				stream.on('data', function(data) {
 					console.log(TAG, 'on data:', data.length);
+					console.log(TAG, 'on data bytes:', Buffer.byteLength(data, 'binary'));
 					totalLength += data.length;
 					bufferArray.push(data);
 				});
+				stream.pipe(fs.createWriteStream('temp.jpg'));
 				stream.on('end', function() {
 					console.log(TAG, 'on end');
 					console.log(TAG, 'bufferArray.length:', bufferArray.length);
 					console.log(TAG, '       totalLength:', totalLength);
+					console.log(TAG, '       byte length:', Buffer.byteLength(bufferArray.join(''), 'binary'));
+					write_to_disk(bufferArray.join(''));
+
 					emitter.emit(EVENT.RECEIVED_FILE_FROM_BROWSER, bufferArray);
 				});
 			});
@@ -57,7 +62,7 @@ function SocketioServerManager() {
 	}
 
 	function write_to_disk(data) {
-		fs.writeFileSync('temp.jpg', data);
+		fs.writeFileSync('temp.txt', data);
 	}
 
 	function send_image_to_browser(dataToSend) {
@@ -65,7 +70,8 @@ function SocketioServerManager() {
     if(initialized) {
       console.log(TAG, 'mySocket is initialized');
 	    console.log(TAG, 'length', dataToSend.length);
-	    write_to_disk('好');
+	    console.log(TAG, 'byte length', Buffer.byteLength(dataToSend));
+	    //write_to_disk(dataToSend[0]);
 			mySocket.emit(EVENT.SEND_IMAGE_TO_BROWSER, {data: dataToSend});
 		} else {
 			console.log(TAG, 'mySocket not initialized');

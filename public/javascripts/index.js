@@ -44,7 +44,6 @@ window.onload = function() {
   inputs.select_file(element, function(err, file, url) {
     if(err === undefined) {
       console.log(file);
-      console.log(file.size);
       set_image_view(url);
       // process_image();
 

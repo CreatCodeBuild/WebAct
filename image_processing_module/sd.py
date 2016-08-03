@@ -1,10 +1,6 @@
-# coding:utf8
-
-# from __future__ import print_function
 import cv2
 import numpy as np
 import zerorpc
-from struct import *
 import sys
 import io
 
@@ -109,13 +105,13 @@ class StreamingRPC():
 
         print('type:', type(buffer_of_image), 'len:', len(buffer_of_image))  # debug
 
-        tostring = list((str(buffer_of_image.tostring())))
+        list_of_byte = list((buffer_of_image.tostring()))
         # _list = string_to_list(tostring)
-        print('type:', type(tostring))
-        print('len:', len(tostring))
+        print('type:', type(list_of_byte))
+        print('len:', len(list_of_byte))
         # for s in _list:
         #     print(len(s))
-        return tostring
+        return list_of_byte
 
     def test(self, string):
         print(len(string))
