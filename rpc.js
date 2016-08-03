@@ -16,7 +16,7 @@ console.log('rpc.js');
 function zeroClient() {
   var TAG = 'zeroClient';
 
-  console.log('rpc.js zeroClient');
+  console.log(TAG, 'rpc.js zeroClient');
   var zerorpc = require('zerorpc');
 
   var client = new zerorpc.Client();
@@ -42,27 +42,26 @@ function zeroClient() {
 
   function process_image_callback(error, result, more) {
 
-    console.log(' error type:', typeof error);
-    console.log('result type:', typeof result);
-    console.log('  more type:', typeof more);
+    console.log(TAG, ' error type:', typeof error);
+    console.log(TAG, 'result type:', typeof result);
+    console.log(TAG, '  more type:', typeof more);
     if(result === undefined || error !== undefined) { //error
       console.log(error);
     } else {
-      console.log('result length:', result.length);
+      console.log(TAG, 'result length:', result.length);
       let size = 0;
       let byteSize = 0;
       let i = 0;
       for(i = 0; i < result.length; i++) {
         size += result[i].length;
-        byteSize += Buffer.byteLength(result[i]);
+        byteSize += Buffer.byteLength(result[i], 'binary');
       }
-      console.log('total      size:', size);
-      console.log('total byte size:', byteSize);
-      let resultCombine = result.join('');
-      console.log(TAG, '  resultCombine type', typeof resultCombine);
-      console.log(TAG, 'resultCombine.length', resultCombine.length);
+      console.log(TAG, 'total byte size:', byteSize);
+      //let resultCombine = result.join('');
+      //console.log(TAG, '  resultCombine type', typeof resultCombine);
+      //console.log(TAG, 'resultCombine.length', resultCombine.length);
       //separating of concerns, let event handler to decide what to do
-      myEmitter.emit(EVENT.SEND_IMAGE_TO_BROWSER, resultCombine);
+      //myEmitter.emit(EVENT.SEND_IMAGE_TO_BROWSER, resultCombine);
     }
   }
 

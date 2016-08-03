@@ -34,30 +34,38 @@ function SocketioServerManager() {
 			mySocket = socket;
 			ssSocket = ss(socket);
 			initialized = true;
+
 			// todo:
 			// need to document that stream and additionalData are
 			// in below callback function
 			ssSocket.on(EVENT.FILE_UPLOAD, function(stream, additionalData) {
 				console.log(TAG, 'on EVENT.FILE_UPLOAD');
+
 				var bufferArray = [];
 				var totalLength = 0;
+				var byteLength = 0;
+
 				stream.on('data', function(data) {
+					console.log(TAG, 'type of data:', typeof data);
 					console.log(TAG, 'on data:', data.length);
 					console.log(TAG, 'on data bytes:', Buffer.byteLength(data, 'binary'));
+					console.log(TAG, 'on data bytes:', Buffer.byteLength(data));
 					totalLength += data.length;
+					byteLength += Buffer.byteLength(data, 'binary');
 					bufferArray.push(data);
 				});
-				stream.pipe(fs.createWriteStream('temp.jpg'));
+
 				stream.on('end', function() {
 					console.log(TAG, 'on end');
 					console.log(TAG, 'bufferArray.length:', bufferArray.length);
 					console.log(TAG, '       totalLength:', totalLength);
+					console.log(TAG, '       byte length:', byteLength);
 					console.log(TAG, '       byte length:', Buffer.byteLength(bufferArray.join(''), 'binary'));
-					write_to_disk(bufferArray.join(''));
 
 					emitter.emit(EVENT.RECEIVED_FILE_FROM_BROWSER, bufferArray);
 				});
 			});
+
 		});
 	}
 
@@ -76,6 +84,13 @@ function SocketioServerManager() {
 		} else {
 			console.log(TAG, 'mySocket not initialized');
 		}
+	}
+
+	{
+		//test
+		let string = fs.readFileSync('temp.jpg');
+		console.log(string.length);
+		console.log(Buffer.byteLength(string));
 	}
 
 	let publicAPI = {

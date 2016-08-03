@@ -105,7 +105,7 @@ class StreamingRPC():
 
         print('type:', type(buffer_of_image), 'len:', len(buffer_of_image))  # debug
 
-        list_of_byte = list((buffer_of_image.tostring()))
+        list_of_byte = list(buffer_of_image.tostring())
         # _list = string_to_list(tostring)
         print('type:', type(list_of_byte))
         print('len:', len(list_of_byte))
