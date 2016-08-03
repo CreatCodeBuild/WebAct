@@ -49,14 +49,21 @@ function zeroClient() {
       console.log(error);
     } else {
       console.log(TAG, 'result length:', result.length);
+      console.log(TAG, 'typeof:', typeof result[0]);
       let size = 0;
       let byteSize = 0;
       let i = 0;
+      let bufferArray = [];
       for(i = 0; i < result.length; i++) {
         size += result[i].length;
         byteSize += Buffer.byteLength(result[i], 'binary');
+        bufferArray.push(Buffer.from(result[i], 'binary')); //I want to cry when I write this line
       }
+      let newBuffer = Buffer.concat(bufferArray);
       console.log(TAG, 'total byte size:', byteSize);
+      console.log(TAG, 'newBuffer size:', newBuffer.length);
+      console.log(TAG, 'newBuffer byte length:', Buffer.byteLength(newBuffer, 'binary'));
+
       //let resultCombine = result.join('');
       //console.log(TAG, '  resultCombine type', typeof resultCombine);
       //console.log(TAG, 'resultCombine.length', resultCombine.length);
@@ -65,17 +72,6 @@ function zeroClient() {
     }
   }
 
-  //test
-  (function test() {
-    var array = [];
-    for (var i = 0; i < 1234567; i++) {
-      array.push('\0');
-    }
-    array = array.join('');
-    client.invoke('test', array, function (error, res, more) {
-      console.log(TAG, 'test length', res.length);
-    });
-  })();
 
   console.log('rpc.js zeroClient return');
   return {

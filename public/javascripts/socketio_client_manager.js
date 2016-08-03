@@ -63,7 +63,7 @@ socketioManager = (function SocketioClientManager() {
 			var imageBlob = new Blob([buffer]);
 			var imageElement = document.getElementById('ocr');
 			imageElement.src = URL.createObjectURL(imageBlob);
-			download('test.txt', buffer);
+			//download('test.txt', buffer);
 		});
 	}
 

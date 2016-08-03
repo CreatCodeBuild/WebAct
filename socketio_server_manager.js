@@ -44,6 +44,7 @@ function SocketioServerManager() {
 				var bufferArray = [];
 				var totalLength = 0;
 				var byteLength = 0;
+				var newBuffer;
 
 				stream.on('data', function(data) {
 					console.log(TAG, 'type of data:', typeof data);
@@ -56,11 +57,12 @@ function SocketioServerManager() {
 				});
 
 				stream.on('end', function() {
+					newBuffer = Buffer.concat(bufferArray);
 					console.log(TAG, 'on end');
 					console.log(TAG, 'bufferArray.length:', bufferArray.length);
 					console.log(TAG, '       totalLength:', totalLength);
 					console.log(TAG, '       byte length:', byteLength);
-					console.log(TAG, '       byte length:', Buffer.byteLength(bufferArray.join(''), 'binary'));
+					console.log(TAG, '  newBuffer length:', newBuffer.length);
 
 					emitter.emit(EVENT.RECEIVED_FILE_FROM_BROWSER, bufferArray);
 				});
@@ -69,29 +71,20 @@ function SocketioServerManager() {
 		});
 	}
 
-	function write_to_disk(data) {
-		fs.writeFileSync('temp.txt', data);
-	}
-
 	function send_image_to_browser(dataToSend) {
     console.log(TAG, 'send_image_to_browser');
     if(initialized) {
       console.log(TAG, 'mySocket is initialized');
 	    console.log(TAG, 'length', dataToSend.length);
 	    console.log(TAG, 'byte length', Buffer.byteLength(dataToSend));
-	    //write_to_disk(dataToSend[0]);
+
+	    //need to use stream
 			mySocket.emit(EVENT.SEND_IMAGE_TO_BROWSER, {data: dataToSend});
 		} else {
 			console.log(TAG, 'mySocket not initialized');
 		}
 	}
 
-	{
-		//test
-		let string = fs.readFileSync('temp.jpg');
-		console.log(string.length);
-		console.log(Buffer.byteLength(string));
-	}
 
 	let publicAPI = {
 		init: init,
