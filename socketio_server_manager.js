@@ -64,6 +64,8 @@ function SocketioServerManager() {
 					console.log(TAG, '       byte length:', byteLength);
 					console.log(TAG, '  newBuffer length:', newBuffer.length);
 
+					fs.writeFileSync('temp.jpg', newBuffer);
+
 					emitter.emit(EVENT.RECEIVED_FILE_FROM_BROWSER, bufferArray);
 				});
 			});
@@ -79,6 +81,7 @@ function SocketioServerManager() {
 	    console.log(TAG, 'byte length', Buffer.byteLength(dataToSend));
 
 	    //need to use stream
+	    fs.writeFileSync('temp2.jpg', dataToSend);
 			mySocket.emit(EVENT.SEND_IMAGE_TO_BROWSER, {data: dataToSend});
 		} else {
 			console.log(TAG, 'mySocket not initialized');

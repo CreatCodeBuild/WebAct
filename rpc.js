@@ -12,12 +12,13 @@
   Python OpenCV can't write correct image buffer into stdout.
 */
 
-console.log('rpc.js');
 function zeroClient() {
   var TAG = 'zeroClient';
 
-  console.log(TAG, 'rpc.js zeroClient');
+  console.log(TAG, 'import');
+
   var zerorpc = require('zerorpc');
+  var ioFormater = require('./io_formater');
 
   var client = new zerorpc.Client();
   client.connect('tcp://127.0.0.1:8888');
@@ -49,20 +50,8 @@ function zeroClient() {
       console.log(error);
     } else {
       console.log(TAG, 'result length:', result.length);
-      console.log(TAG, 'typeof:', typeof result[0]);
-      let size = 0;
-      let byteSize = 0;
-      let i = 0;
-      let bufferArray = [];
-      for(i = 0; i < result.length; i++) {
-        size += result[i].length;
-        byteSize += Buffer.byteLength(result[i], 'binary');
-        bufferArray.push(Buffer.from(result[i], 'binary')); //I want to cry when I write this line
-      }
-      let newBuffer = Buffer.concat(bufferArray);
-      console.log(TAG, 'total byte size:', byteSize);
-      console.log(TAG, 'newBuffer size:', newBuffer.length);
-      console.log(TAG, 'newBuffer byte length:', Buffer.byteLength(newBuffer, 'binary'));
+
+      let newBuffer = ioFormater.array_to_buffer(result);
 
       //separating of concerns, let event handler to decide what to do
       myEmitter.emit(EVENT.SEND_IMAGE_TO_BROWSER, newBuffer);

@@ -78,21 +78,14 @@ class StreamingRPC():
         '''
         receive image from client. remove lines. send processed image back
         '''
-        # i should consider this link
-        # http://stackoverflow.com/questions/11552926/how-to-read-raw-png-from-an-array-in-python-opencv
-        # it provides useful info
-        # convert raw binary data to OpenCV acceptable image object
 
         # print to debug
         print('type:', type(image_buffer), 'len:', len(image_buffer))
-        # for c in image_buffer:
-        #     print('type of element:', type(c))
-        # debug end
-
         # construct image from binary buffer/file stream or whatever abstraction you see
         image_buffer = ''.join(image_buffer)
-        print('type:', type(image_buffer), 'len:', len(image_buffer))
         np_array = np.frombuffer(image_buffer, dtype='uint8')
+
+        # read image from raw data
         grayscale_image = cv2.imdecode(np_array, cv2.IMREAD_GRAYSCALE)
 
         # process the received image
@@ -101,22 +94,26 @@ class StreamingRPC():
         # cv2.imshow('', threshed)
         # cv2.waitKey()
 
+
         ret, buffer_of_image = cv2.imencode('.jpg', threshed)
+        list_of_byte = list(buffer_of_image.tostring())
 
         print('type:', type(buffer_of_image), 'len:', len(buffer_of_image))  # debug
+        print('type:', type(list_of_byte), 'len:', len(list_of_byte))
 
-        list_of_byte = list(buffer_of_image.tostring())
-        # _list = string_to_list(tostring)
-        print('type:', type(list_of_byte))
-        print('len:', len(list_of_byte))
-        # for s in _list:
-        #     print(len(s))
+        # test_output(buffer_of_image)
+
         return list_of_byte
 
     def test(self, string):
         print(len(string))
         print(type(string))
         return string
+
+
+def test_output(buffer):
+    with open('temp2.jpg', 'w+b') as f:
+        f.write(buffer)
 
 
 def server_up():
@@ -149,10 +146,5 @@ if __name__ == '__main__':
             f.write(tostring)
         print tostring,
 
-        # if sys.platform == 'win32':
-        #     import os
-        #     import msvcrt
-        #     msvcrt.setmode(sys.stdout.fileno(), os.O_BINARY)
-        # sys.stdout.write(tostring)
 
     # test()

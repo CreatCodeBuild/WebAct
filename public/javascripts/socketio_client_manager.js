@@ -38,15 +38,17 @@ socketioManager = (function SocketioClientManager() {
 
 		socket.on(EVENT.SEND_IMAGE_TO_BROWSER, function(receivedData) {
 			var buffer = receivedData.data;
-			var totalLength = buffer.length;
+			var int8Array = new Int8Array(buffer);
+			var totalLength = int8Array.length;
 
 			console.log(TAG, EVENT.SEND_IMAGE_TO_BROWSER);
 			console.log(TAG, 'typeof buffer', typeof buffer);
+			console.log(TAG, 'buffer instanceof TypedArray', buffer instanceof ArrayBuffer);
 			console.log(TAG, '  totalLength', totalLength);
 
 			function download(filename, text) {
 				var pom = document.createElement('a');
-				pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+				pom.setAttribute('href', 'data:text/plain;' + encodeURIComponent(text));
 				pom.setAttribute('download', filename);
 
 				if (document.createEvent) {
@@ -60,10 +62,10 @@ socketioManager = (function SocketioClientManager() {
 			}
 
 			//todo: construct a image from bufferArray
-			var imageBlob = new Blob([buffer]);
+			var imageBlob = new File(int8Array, 'temp.jpg');
 			var imageElement = document.getElementById('ocr');
 			imageElement.src = URL.createObjectURL(imageBlob);
-			//download('test.txt', buffer);
+			download('test.jpg', int8Array);
 		});
 	}
 
