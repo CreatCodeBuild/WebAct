@@ -50,7 +50,6 @@ function SocketioServerManager() {
 					console.log(TAG, 'type of data:', typeof data);
 					console.log(TAG, 'on data:', data.length);
 					console.log(TAG, 'on data bytes:', Buffer.byteLength(data, 'binary'));
-					console.log(TAG, 'on data bytes:', Buffer.byteLength(data));
 					totalLength += data.length;
 					byteLength += Buffer.byteLength(data, 'binary');
 					bufferArray.push(data);
@@ -62,9 +61,6 @@ function SocketioServerManager() {
 					console.log(TAG, 'bufferArray.length:', bufferArray.length);
 					console.log(TAG, '       totalLength:', totalLength);
 					console.log(TAG, '       byte length:', byteLength);
-					console.log(TAG, '  newBuffer length:', newBuffer.length);
-
-					fs.writeFileSync('temp.jpg', newBuffer);
 
 					emitter.emit(EVENT.RECEIVED_FILE_FROM_BROWSER, bufferArray);
 				});

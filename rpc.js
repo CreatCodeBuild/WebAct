@@ -54,9 +54,14 @@ function zeroClient() {
       let newBuffer = ioFormater.array_to_buffer(result);
 
       //separating of concerns, let event handler to decide what to do
-      myEmitter.emit(EVENT.SEND_IMAGE_TO_BROWSER, newBuffer);
+      //myEmitter.emit(EVENT.SEND_IMAGE_TO_BROWSER, newBuffer);
     }
   }
+
+  client.invoke('test', 'ÿ', function(error, res, more) {
+    console.log(res.charCodeAt(0));
+    console.log(Buffer.from(res, 'binary'));
+  });
 
 
   console.log('rpc.js zeroClient return');

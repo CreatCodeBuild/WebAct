@@ -102,12 +102,14 @@ class StreamingRPC():
         print('type:', type(list_of_byte), 'len:', len(list_of_byte))
 
         # test_output(buffer_of_image)
-
-        return list_of_byte
+        print(list_of_byte[-1234].encode('hex'))
+        return buffer_of_image.tostring()
 
     def test(self, string):
-        print(len(string))
+        print(len(string), string)
         print(type(string))
+        print(string.encode('hex'))
+        print('ÿ')
         return string
 
 
