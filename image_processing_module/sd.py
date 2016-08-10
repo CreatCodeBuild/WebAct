@@ -109,7 +109,7 @@ class StreamingRPC():
         print(len(string), string)
         print(type(string))
         print(string.encode('hex'))
-        print('ÿ')
+
         return string
 
 
