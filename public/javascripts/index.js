@@ -1,6 +1,28 @@
 window.onload = function() {
   console.log('window.onload');
 
+  function template(inputString) {
+    var keyWords = [
+      '工程名称',
+      '建设地址',
+      '建设单位',
+      '监理单位',
+      '总包单位',
+      '工程类别',
+      '建筑面积',
+      '开工日期',
+      '竣工日期',
+      '设计单位',
+      '受监单位名称',
+      '收件单位电话',
+      '项目经理姓名',
+      '项目经理手机',
+      '文明施工管理员姓名',
+      '文明施工管理员手机'
+    ];
+    var content = [];
+  }
+
   /* function declaretions 函数声明 */
   function process_image() {
     let img = new Image();

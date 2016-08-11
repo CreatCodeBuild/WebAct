@@ -1,3 +1,9 @@
+/*
+  This module is the wrapper around socket.io functionalities. Socket.IO is a real time message passing library.
+  This module is written as a closure pattern.
+
+  Need to require it in other js script to use it.
+*/
 function SocketioServerManager() {
   console.log('SocketioServerManager module');
 
@@ -5,19 +11,30 @@ function SocketioServerManager() {
   const socketio = require('socket.io');
   var ss = require('socket.io-stream');
 
-
+  /* all events of this project */
   var EVENT;
+  /* event emitter from EventManager() */
   var emitter;
 
 
   const TAG = 'SocketioServerManager';
 
+  /* The HTTP server of NodeJS */
 	var httpServer;
+  /* The socketio instance */
 	var io;
+  /* SocketIO socket */
 	var mySocket;
+  /* socket io streaming socket */
 	var ssSocket;
+  /* A flags */
 	var initialized = false;
 
+  /*
+    @server: NodeJS server,
+    @eventManager: instance of EventManager, when I say instance, I mean the return value of EventManager()
+    init this Module for later use.
+   */
 	function init(server, eventManager) {
 		console.log(TAG, 'init everything');
 		httpServer = server;
@@ -27,6 +44,9 @@ function SocketioServerManager() {
 		registerEvents();
 	}
 
+  /*
+    register events for socketio
+   */
 	function registerEvents() {
     console.log(TAG, 'start to registerEvents');
 		io.on('connection', function(socket) {
@@ -69,6 +89,10 @@ function SocketioServerManager() {
 		});
 	}
 
+  /*
+    @dataToSend: a binary buffer/binary array/binary string that represents an image file
+    if this module is initialized, then send dataToSend to browser/front end
+   */
 	function send_image_to_browser(dataToSend) {
     console.log(TAG, 'send_image_to_browser');
     if(initialized) {
@@ -77,7 +101,7 @@ function SocketioServerManager() {
 	    console.log(TAG, 'byte length', Buffer.byteLength(dataToSend));
 
 	    //need to use stream
-	    fs.writeFileSync('temp2.jpg', dataToSend);
+	    fs.writeFileSync('temp2.jpg', dataToSend); // debug
 			mySocket.emit(EVENT.SEND_IMAGE_TO_BROWSER, {data: dataToSend});
 		} else {
 			console.log(TAG, 'mySocket not initialized');
