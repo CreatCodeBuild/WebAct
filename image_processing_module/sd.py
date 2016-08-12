@@ -5,12 +5,28 @@ import sys
 import io
 
 
+"""
+这是一个用Python写的图像预处理模组。
+该模组要干的事情就是从NodeJS端得到图片，将图片转化为二值图，然后将图片中的长线条移除。
+再将处理过后的图片传回给NodeJS。
+
+本模组使用到了OpenCV 3.0 Python2.7 版本
+"""
+
+
 def gray(im):
+    '''
+    @param: im, image的缩写，一个OpenCV可识别的图片
+    @return: im的灰度图
+    '''
     return cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
 
 
 def threshold(im_gray, method):
-
+    '''
+    得到一张灰度图，通过thresholding的方法，得到二值图返回
+    有三种不同的thresholding方法，具体的参见OpenCV文档
+    '''
     if method == 'fixed':
         threshed_im = cv2.threshold(im_gray, 128, 255, cv2.THRESH_BINARY)
 

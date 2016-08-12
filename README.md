@@ -13,25 +13,23 @@ I watched a "Documentation Driven Development" talk from PyCon16, which inspired
 Hope this can get you excited to join me as well. (No, I don't really has that hope unless this is a cool software)
 
 ### The current architecture
-####1. A Javascript Brwoser End
+####1. Frond End 前端
 Currently I have 2 main modules created by me:
 1. index.js: the user space code which bridges html with other APIs
 2. socketio_client_manager.js: manages all the socketio usage, such as file upload/download, exposes a set of APIs to index.js
 
 Currently dependencies:
-socketio, socketio-stream, materializecss, and most importantly tesseract.js
+socketio, socketio-stream, materializecss, tesseract.js
 
-####2. A NodeJS Express Back End
-Just a bridge between browser and Python. If I know how to do web dev in Python such as Flask, Django, I will probably just use them instead of NodeJS with Express. Anyway, the choice of NodeJS is purely due to my ignorance rather than any smart decision.
+####2. NodeJS Express Back End
+A bridge between browser and Python.
 
 ####3. A Python Image Processing module that should be called by NodeJS (probably through a file stream in some manner)
 This is just a python script that uses opencv to process images. It send the processed image back to NodeJS. Then NodeJS send this iamge back to browser.
 
-Although the text recognition is purely done on browser by tesseract.js and a web worker (or service worker? I'm not sure yet), the image still required some preprocess. OpenCV might be the best image manipulation tools available since this software needs to do some pretty advanced image processing. Currently, the python code just extract all the text by removing other stuff from the original image.
-
 # Test
-### There is no test.
-Yeah, I know.
+### There is no test. 没有测试
+
 
 # To do, I re-evaluated my priorities.
 1. browser needs to construct an image from the string buffer it received from NodeJS
