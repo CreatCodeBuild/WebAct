@@ -43,6 +43,9 @@ def threshold(im_gray, method):
 
 
 def line_detect(im):
+    '''
+    检测这张图片里面的横线和纵线，返回这些线条
+    '''
     v_lines = cv2.HoughLinesP(im, 1, np.pi,
                               threshold=50,
                               minLineLength=50,
@@ -77,19 +80,11 @@ def remove_lines(threshed_image):
             cv2.line(threshed_image, (x1, y1), (x2, y2), color, 3)
 
 
-def string_to_list(string):
-    _list = []
-    for i in range(0, len(string), 8192):
-        if i+8192 <= len(string):
-            _list.append(string[i:i+8192])
-        else:
-            _list.append(string[i:])
-    if len(string) != sum([len(x) for x in _list]):
-        raise Exception('wrong')
-    else:
-        return _list
-
 class StreamingRPC():
+    '''
+    zero rpc 的实现类，这个类会被传到zerorpc的模组里面去
+    详情见zerorpc官网 http://www.zerorpc.io/
+    '''
     def process_image(self, image_buffer):
         '''
         receive image from client. remove lines. send processed image back
