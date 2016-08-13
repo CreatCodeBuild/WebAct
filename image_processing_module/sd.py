@@ -117,6 +117,9 @@ class StreamingRPC():
         return buffer_of_image.tostring()
 
     def test(self, string):
+        '''
+        用来做测试的函数，仅调试所用
+        '''
         print(len(string), string)
         print(type(string))
         print(string.encode('hex'))
@@ -124,12 +127,10 @@ class StreamingRPC():
         return string
 
 
-def test_output(buffer):
-    with open('temp2.jpg', 'w+b') as f:
-        f.write(buffer)
-
-
 def server_up():
+    '''
+    启动 zerorpc 的服务器，详情见 http://www.zerorpc.io/
+    '''
     server = zerorpc.Server(StreamingRPC())
     server.bind("tcp://0.0.0.0:8888")  # listen for local address
     server.run()
@@ -139,6 +140,9 @@ if __name__ == '__main__':
     server_up()
 
     def test():
+        '''
+        用来做测试的函数，仅调试所用
+        '''
         # debug purpose
         # process the received image
         image = cv2.imread('demo4.jpg', cv2.IMREAD_GRAYSCALE)
