@@ -2,8 +2,7 @@ from flask import Flask, send_from_directory, request, abort
 
 
 app = Flask(__name__)
-app.debug = True
-# url_for('public', filename='index.html')
+# app.debug = True
 
 
 @app.route('/')
@@ -19,10 +18,12 @@ def index(filename):
 
 @app.route('/image', methods=['POST'])
 def login():
-    if request.method == 'POST':
-        do_the_login()
-    else:
-        abort(400)
+    # if request.method == 'POST':
+    json = request.get_json()
+    print(len(json))
+    # else:
+    #     print(request.method)
+    #     abort(400)
 
 if __name__ == "__main__":
     app.run(port=8080)

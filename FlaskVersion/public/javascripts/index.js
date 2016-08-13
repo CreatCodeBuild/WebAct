@@ -9,6 +9,7 @@ function WebAct() {
     $.ajax({
       method: "POST",
       url: rest_api_route,
+      contentType: "application/json",
       data: { binaryData: binaryData }
     })
     .done(server_response_callback);
