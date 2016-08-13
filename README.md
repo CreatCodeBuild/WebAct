@@ -32,6 +32,7 @@ This is just a python script that uses opencv to process images. It send the pro
 
 
 # To do, I re-evaluated my priorities.
+0. Change the whole system to Flask / jQuery ajax should be good for file/binary data uploading
 1. browser needs to construct an image from the string buffer it received from NodeJS
 2. browser side semantic checking
 3. browser side image compression, to make it faster

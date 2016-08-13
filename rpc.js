@@ -1,15 +1,9 @@
 
 
-/* Note: 2016/07/25, Monday, 00:55
-  I found that rpc is not a good solution for my need. It requires too much overhead on my writing side.
-  Though it might be a good solution when my need grows.
-  Temporarily give up zero rpc.
-  Now my solution is to let NodeJS write the image to a directory, then let Python read
-  this image from that directory.
-  After image processing, Python writes to the same directory and then NodeJS reads it.
-  The problem is that file system does not prevent racing condition.
-  The most straing forward solution is to use standard input output, but, it seems that
-  Python OpenCV can't write correct image buffer into stdout.
+/*
+  2016年8月13号
+  zero rpc 的 JavaScript 客户端
+  已知的bug：Python到NodeJS的通讯的字符串编码问题
 */
 
 function zeroClient() {

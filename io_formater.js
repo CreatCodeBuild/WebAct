@@ -1,3 +1,6 @@
+/*
+  
+ */
 function IOFormater() {
 
   var TAG = 'IOFormater';
@@ -9,33 +12,17 @@ function IOFormater() {
   }
 
   function array_to_buffer(array) {
-    //var arrayLength = array.length;
-    //var byteSize = 0;
-    //var i;
-    //var bufferArray = [];
-    //for(i = 0; i < array.length; i++) {
-    //  let buffer = Buffer.from(array[i], 'binary');
-    //  byteSize += buffer.length;
-    //  bufferArray.push(buffer); //I want to cry when I write this line
-    //}
-    //var newBuffer = Buffer.concat(bufferArray);
-    //console.log(TAG, array[arrayLength-1234].charCodeAt(0), newBuffer[arrayLength-1234]);
-    //
-    //console.log(TAG, 'arrayLength:', arrayLength);
-    //console.log(TAG, '   byteSize:', byteSize);
-
     var newBuffer = Buffer.from(array, 'binary');
-    fs.writeFileSync('temp.hex', newBuffer);
-
+    // fs.writeFileSync('temp.hex', newBuffer); // 仅调试
     return newBuffer;
   }
 
   function buffer_to_array() {
-
+    // to be implemented
   }
 
   function buffer_to_string() {
-
+    // to be implemented
   }
 
   return {
