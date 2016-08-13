@@ -6,7 +6,12 @@ function WebAct() {
    @server_response_callback: function(error, response)
    */
   function send_binary_data(binaryData, rest_api_route, server_response_callback) {
-
+    $.ajax({
+      method: "POST",
+      url: rest_api_route,
+      data: { binaryData: binaryData }
+    })
+    .done(server_response_callback);
   }
 
   function file_to_buffer(file, callback) {
@@ -104,7 +109,7 @@ window.onload = function Main() {
 
   /* start 开始 */
   webAct.select_file(element, function(err, file, url) {
-    if(err === undefined) {
+    if(err === undefined) { //如果没有出错
       console.log(file);
       set_image_view(url);
       // process_image();
@@ -112,9 +117,15 @@ window.onload = function Main() {
       webAct.file_to_buffer(file, function() {
         console.log('file_to_buffer', this.result.byteLength);
         var text = this.result;
+
+        //todo: compress the image
+
+        //send image
+        webAct.send_binary_data(text, 'image', function( response ) {
+          console.log( "Data Saved: " + response );
+        });
       });
 
-      //todo: compress the iamge
     } else {
       console.log(err);
     }
