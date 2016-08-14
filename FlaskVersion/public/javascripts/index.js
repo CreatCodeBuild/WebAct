@@ -118,7 +118,7 @@ window.onload = function Main() {
 
     var resultImage = webAct.compress_image(document.getElementById('ocr'), 1);
     resultImage.onload = compressed_image_onload;
-
+    //今天就到这里，明天要连接前端后端，2016/08/14 21:40
   }
 
   function set_image_view(url) {
