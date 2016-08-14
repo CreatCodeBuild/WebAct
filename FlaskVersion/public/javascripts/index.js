@@ -39,32 +39,29 @@ function WebAct() {
     });
   }
 
-  //function template(inputString) {
-  //  var keyWords = [
-  //    '工程名称',
-  //    '建设地址',
-  //    '建设单位',
-  //    '监理单位',
-  //    '总包单位',
-  //    '工程类别',
-  //    '建筑面积',
-  //    '开工日期',
-  //    '竣工日期',
-  //    '设计单位',
-  //    '受监单位名称',
-  //    '收件单位电话',
-  //    '项目经理姓名',
-  //    '项目经理手机',
-  //    '文明施工管理员姓名',
-  //    '文明施工管理员手机'
-  //  ];
-  //  var content = [];
-  //}
+  function image_compression(onload, source_img_obj, quality, output_format){
+
+    var mime_type = "image/jpeg";
+    if(typeof output_format !== "undefined" && output_format=="png"){
+      mime_type = "image/png";
+    }
+
+    var cvs = document.createElement('canvas');
+    cvs.width = source_img_obj.naturalWidth;
+    cvs.height = source_img_obj.naturalHeight;
+    var ctx = cvs.getContext("2d").drawImage(source_img_obj, 0, 0);
+    var newImageData = cvs.toDataURL(mime_type, quality/100);
+    var result_image_obj = new Image();
+    result_image_obj.onload = onload;
+    result_image_obj.src = newImageData;
+    return result_image_obj;
+  }
 
   return {
     select_file: select_file,
     send_binary_data: send_binary_data,
-    file_to_buffer: file_to_buffer
+    file_to_buffer: file_to_buffer,
+    compress_image: image_compression
   }
 }
 
@@ -121,11 +118,18 @@ window.onload = function Main() {
         var text = this.result;
 
         //todo: compress the image
+        function onload(){
+          console.log(this);
+          console.log(new File(this.src));
+        }
+        var resultImage = webAct.compress_image(onload, document.getElementById('ocr'), 50);
+
+
 
         //send image
-        webAct.send_binary_data(text, 'image', function( response ) {
-          console.log( "Data Saved: " + response );
-        });
+        //webAct.send_binary_data(text, 'image', function( response ) {
+        //  console.log( "Data Saved: " + response );
+        //});
       });
 
     } else {
@@ -133,3 +137,25 @@ window.onload = function Main() {
     }
   });
 };
+
+//function template(inputString) {
+//  var keyWords = [
+//    '工程名称',
+//    '建设地址',
+//    '建设单位',
+//    '监理单位',
+//    '总包单位',
+//    '工程类别',
+//    '建筑面积',
+//    '开工日期',
+//    '竣工日期',
+//    '设计单位',
+//    '受监单位名称',
+//    '收件单位电话',
+//    '项目经理姓名',
+//    '项目经理手机',
+//    '文明施工管理员姓名',
+//    '文明施工管理员手机'
+//  ];
+//  var content = [];
+//}
