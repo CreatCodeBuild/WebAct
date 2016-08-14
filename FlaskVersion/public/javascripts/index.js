@@ -70,21 +70,19 @@ window.onload = function Main() {
   console.log('window.onload');
 
   /* function declaretions 函数声明 */
-  function process_image() {
-    let img = new Image();
-    img.src = document.getElementById('ocr').src;
-    console.log(img);
-    img.onload = function() {
-      Tesseract.recognize(img,
-                          {
-                            progress: function(e){
-                              console.log(e)
-                            },
-                            lang: 'chi_sim'
-                          }
-      ).then(function(d) {
-        document.getElementById('display').innerHTML += d.text;
-      });
+
+
+
+  function process_image(imgSrc) {
+    console.log('process_image');
+    let newImage = new Image();
+    newImage.src = imgSrc;
+
+    newImage.onload = function() {
+      Tesseract.recognize(newImage, {progress: function(e){console.log(e)},lang: 'chi_sim'})
+          .then(function(d) {
+            document.getElementById('display').innerHTML += d.text;
+          });
     }
   }
 
@@ -112,12 +110,13 @@ window.onload = function Main() {
     //this should be the compressed result image
     var compressedFile = dataURItoBlob(this.src);
     console.log(compressedFile);
+    process_image(this.src);
   }
 
   function image_element_onload() {
     console.log('image_element_onload');
 
-    var resultImage = webAct.compress_image(document.getElementById('ocr'), 50);
+    var resultImage = webAct.compress_image(document.getElementById('ocr'), 1);
     resultImage.onload = compressed_image_onload;
 
   }
