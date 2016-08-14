@@ -88,16 +88,23 @@ window.onload = function Main() {
     }
   }
 
+  function compressed_image_onload() {
+    //this should be the compressed result image
+    console.log(this);
+  }
+
+  function image_element_onload() {
+    console.log('image_element_onload');
+
+    var resultImage = webAct.compress_image(document.getElementById('ocr'), 50);
+    console.log(resultImage);
+    resultImage.onload = compressed_image_onload;
+
+  }
+
   function set_image_view(url) {
     let imageElement = document.getElementById('ocr');
-    imageElement.onload = function() {
-      console.log('set_image_view', this.naturalHeight);
-      var resultImage = webAct.compress_image(document.getElementById('ocr'), 50);
-      console.log(resultImage);
-      resultImage.onload = function(){
-        console.log(resultImage)
-      };
-    };
+    imageElement.onload = image_element_onload;
     imageElement.src = url;
   }
   /* function declaretions end 函数声明结束 */
