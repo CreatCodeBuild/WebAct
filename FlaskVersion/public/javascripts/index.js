@@ -39,7 +39,7 @@ function WebAct() {
     });
   }
 
-  function image_compression(onload, source_img_obj, quality, output_format){
+  function image_compression(source_img_obj, quality, output_format){
 
     var mime_type = "image/jpeg";
     if(typeof output_format !== "undefined" && output_format=="png"){
@@ -49,10 +49,10 @@ function WebAct() {
     var cvs = document.createElement('canvas');
     cvs.width = source_img_obj.naturalWidth;
     cvs.height = source_img_obj.naturalHeight;
+    console.log('image compress', cvs.width, cvs.height);
     var ctx = cvs.getContext("2d").drawImage(source_img_obj, 0, 0);
     var newImageData = cvs.toDataURL(mime_type, quality/100);
     var result_image_obj = new Image();
-    result_image_obj.onload = onload;
     result_image_obj.src = newImageData;
     return result_image_obj;
   }
@@ -92,6 +92,11 @@ window.onload = function Main() {
     let imageElement = document.getElementById('ocr');
     imageElement.onload = function() {
       console.log('set_image_view', this.naturalHeight);
+      var resultImage = webAct.compress_image(document.getElementById('ocr'), 50);
+      console.log(resultImage);
+      resultImage.onload = function(){
+        console.log(resultImage)
+      };
     };
     imageElement.src = url;
   }
@@ -118,12 +123,6 @@ window.onload = function Main() {
         var text = this.result;
 
         //todo: compress the image
-        function onload(){
-          console.log(this);
-          console.log(new File(this.src));
-        }
-        var resultImage = webAct.compress_image(onload, document.getElementById('ocr'), 50);
-
 
 
         //send image
