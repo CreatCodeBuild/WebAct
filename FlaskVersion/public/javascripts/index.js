@@ -7,12 +7,13 @@ function WebAct() {
    */
   function send_binary_data(binaryData, rest_api_route, server_response_callback) {
     $.ajax({
-      method: "POST",
+      type: "POST",
       url: rest_api_route,
       contentType: "application/json",
-      data: { binaryData: binaryData }
-    })
-    .done(server_response_callback);
+      dataType: "json",
+      data: { binaryData: binaryData },
+      success: server_response_callback
+    });
   }
 
   function file_to_buffer(file, callback) {
