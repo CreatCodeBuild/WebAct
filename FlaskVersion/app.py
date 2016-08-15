@@ -5,12 +5,12 @@ app = Flask(__name__)
 app.debug = True
 
 
-@app.route('/image', methods=['POST'])
+@app.route('/image', methods=['GET', 'POST'])
 def image():
-    json = request.get_json()
-    app.logger.debug(request.content_type)
-    app.logger.debug(len(json))
-    return len(json)
+    # json = request.get_json()
+    # app.logger.debug(request.content_type)
+    # app.logger.debug(len(json))
+    return '123'
 
 
 @app.route('/')
