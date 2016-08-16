@@ -98,8 +98,8 @@ def process_image(image_buffer):
     # process the received image
     threshed = process_an_image(grayscale_image)
     remove_lines(threshed)
-    cv2.imshow('', threshed)  # debug
-    cv2.waitKey()
+    # cv2.imshow('', threshed)  # debug
+    # cv2.waitKey()
 
 
     ret, buffer_of_image = cv2.imencode('.jpg', threshed)

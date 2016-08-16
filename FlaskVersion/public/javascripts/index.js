@@ -1,30 +1,32 @@
-
-function WebAct() {
-  /*
-   @file: blob
-   @rest_api_route: string
-   @server_response_callback: function(error, response)
-   */
-  function send_binary_data(binaryData, rest_api_route, server_response_callback) {
-    //todo: 需要将这里改成传递二进制数据
-    // Since we deal with Firefox and Chrome only
-    var bytesArray = new Uint8Array(binaryData); //this is an ArrayBufferView
-
-    console.log('send_binary_data', bytesArray);
-
+function WebActor() {
+  function post_binary_data(binaryData, rest_api_route, server_response_callback) {
+    var uint8Array = new Uint8Array(binaryData); //this is an ArrayBufferView
     var xhr = new XMLHttpRequest();
     xhr.open('POST', rest_api_route, true);
     xhr.responseType = "arraybuffer";
     xhr.onload = function (oEvent) {
       var arrayBuffer = xhr.response; // Note: not oReq.responseText
       if (arrayBuffer) {
-        let byteArray = new Uint8Array(arrayBuffer);
-        console.log('xhr', byteArray.byteLength);
+        server_response_callback(arrayBuffer);
       }
     };
-    xhr.send(bytesArray);
+    xhr.send(uint8Array);
   }
 
+  function post_blob_as_binary_data(blob, rest_api_route, server_response_callback) {
+    //todo: implement it
+  }
+
+  return {
+    post_binary_data: post_binary_data,
+    post_blob_as_binary_data: post_blob_as_binary_data
+  };
+}
+
+
+function WebAct() {
+
+  /* Data Model Conversion */
   function file_to_buffer(file, callback) {
     var fileReader = new FileReader();
     fileReader.readAsArrayBuffer(file);
@@ -37,6 +39,8 @@ function WebAct() {
     fileReader.onloadend = callback;
   }
 
+
+  /* Select File from File System */
   function select_file(element, on_file_selected) {
     element.addEventListener('change', function(event) {
       console.log('select_file', event);
@@ -54,8 +58,8 @@ function WebAct() {
     });
   }
 
+  /* 压缩图片 */
   function image_compression(source_img_obj, quality, output_format){
-
     var mime_type = "image/jpeg";
     if(typeof output_format !== "undefined" && output_format=="png"){
       mime_type = "image/png";
@@ -64,7 +68,7 @@ function WebAct() {
     var cvs = document.createElement('canvas');
     cvs.width = source_img_obj.naturalWidth;
     cvs.height = source_img_obj.naturalHeight;
-    console.log('image compress', cvs.width, cvs.height);
+    //console.log('image compress', cvs.width, cvs.height);
     var ctx = cvs.getContext("2d").drawImage(source_img_obj, 0, 0);
     var newImageData = cvs.toDataURL(mime_type, quality/100);
     var result_image_obj = new Image();
@@ -74,7 +78,6 @@ function WebAct() {
 
   return {
     select_file: select_file,
-    send_binary_data: send_binary_data,
     file_to_buffer: file_to_buffer,
     read_file_as_test: read_file_as_test,
     compress_image: image_compression
@@ -86,9 +89,6 @@ window.onload = function Main() {
   console.log('window.onload');
 
   /* function declaretions 函数声明 */
-
-
-
   function process_image(imgSrc) {
     console.log('process_image');
     let newImage = new Image();
@@ -134,7 +134,6 @@ window.onload = function Main() {
 
     var resultImage = webAct.compress_image(document.getElementById('ocr'), 1);
     resultImage.onload = compressed_image_onload;
-    //今天就到这里，明天要连接前端后端，2016/08/14 21:40
   }
 
   function set_image_view(url) {
@@ -149,6 +148,7 @@ window.onload = function Main() {
   /* variable declarations and assignments 变量声明和赋值 */
   let element = document.getElementById('select_file');
   let webAct = WebAct();
+  let webActor = WebActor();
   /* variable declarations and assignments end 变量声明和赋值结束 */
 
 
@@ -162,16 +162,14 @@ window.onload = function Main() {
 
       webAct.file_to_buffer(file, function() {
         //console.log('file_to_buffer', this.result.byteLength);
-        var text = this.result;
+        var arrayBuffer = this.result;
 
         //todo: compress the image
 
 
         //send image
-        webAct.send_binary_data(text, 'image', function( response ) {
-          console.log('12345');
-          console.log( "Data Saved: " + typeof response);
-          console.log( "Data Saved: " + response.length);
+        webActor.post_binary_data(arrayBuffer, '/image', function(serverResponse) {
+          let uint8Array = new Uint8Array(serverResponse);
         });
       });
 
