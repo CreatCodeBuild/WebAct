@@ -15,7 +15,7 @@ def image():
     print('contentType', request.content_type)
     length = len(json['binaryData'])
     print('json length', length)
-    resultImageBuffer = process_image(json['binaryData'])
+    resultImageBuffer = process_image(bytearray(json['binaryData']))
     resultJsonString = JSONEncoder().encode({'resultImageBuffer': resultImageBuffer})
     return resultJsonString
 

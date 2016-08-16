@@ -161,7 +161,7 @@ window.onload = function Main() {
 
         //send image
         webAct.send_binary_data(text, 'image', function( response ) {
-          console.log( "Data Saved: " + response );
+          //console.log( "Data Saved: " + JSON.parse(response) );
         });
       });
 

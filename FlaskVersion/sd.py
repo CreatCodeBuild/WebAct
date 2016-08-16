@@ -90,6 +90,7 @@ def process_image(image_buffer):
     print('type:', type(image_buffer), 'len:', len(image_buffer))
     # construct image from binary buffer/file stream or whatever abstraction you see
     np_array = np.frombuffer(image_buffer, dtype='uint8')
+    print('type:', type(np_array), 'len:', len(np_array))
 
     # read image from raw data
     grayscale_image = cv2.imdecode(np_array, cv2.IMREAD_GRAYSCALE)
