@@ -6,13 +6,18 @@ function WebAct() {
    @server_response_callback: function(error, response)
    */
   function send_binary_data(binaryData, rest_api_route, server_response_callback) {
+    // Since we deal with Firefox and Chrome only
+    var bytesArray = new Uint8Array(binaryData);
+
     console.log('send_binary_data', binaryData.length);
+    console.log('send_binary_data', bytesArray);
+
     $.ajax({
       type: "POST",
       url: rest_api_route,
-      contentType: "application/json",
-      dataType: "json",
-      data: JSON.stringify({ binaryData: binaryData }),
+      contentType: 'application/octet-stream',
+      data: bytesArray,
+      processData: false,
       success: server_response_callback
     });
   }
@@ -152,7 +157,7 @@ window.onload = function Main() {
       set_image_view(url);
       // process_image();
 
-      webAct.read_file_as_test(file, function() {
+      webAct.file_to_buffer(file, function() {
         //console.log('file_to_buffer', this.result.byteLength);
         var text = this.result;
 
