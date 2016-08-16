@@ -16,15 +16,8 @@ Hope this can get you excited to join me as well. (No, I don't really has that h
 ####1. Frond End 前端
 Currently I have 2 main modules created by me:
 1. index.js: the user space code which bridges html with other APIs
-2. socketio_client_manager.js: manages all the socketio usage, such as file upload/download, exposes a set of APIs to index.js
 
-Currently dependencies:
-socketio, socketio-stream, materializecss, tesseract.js
-
-####2. NodeJS Express Back End
-A bridge between browser and Python.
-
-####3. A Python Image Processing module that should be called by NodeJS (probably through a file stream in some manner)
+####2. Python 后端，负责 Web Server 和图像处理
 This is just a python script that uses opencv to process images. It send the processed image back to NodeJS. Then NodeJS send this iamge back to browser.
 
 # Test
@@ -32,7 +25,7 @@ This is just a python script that uses opencv to process images. It send the pro
 
 
 # To do, I re-evaluated my priorities.
-0. Change the whole system to Flask / jQuery ajax should be good for file/binary data uploading
-1. browser needs to construct an image from the string buffer it received from NodeJS
-2. browser side semantic checking
-3. browser side image compression, to make it faster
+1. 整理前端代码，使之更可维护
+2. browser needs to construct an image from the string buffer it received from NodeJS
+3. browser side semantic checking
+4. browser side image compression, to make it faster
