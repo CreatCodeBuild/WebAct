@@ -11,13 +11,13 @@ app.debug = True
 
 @app.route('/image', methods=['POST'])
 def image():
-    json = request.get_json()
+    # json = request.get_json()
     print('contentType', request.content_type)
-    length = len(json['binaryData'])
-    print('json length', length)
-    resultImageBuffer = process_image(bytearray(json['binaryData']))
-    resultJsonString = JSONEncoder().encode({'resultImageBuffer': resultImageBuffer})
-    return resultJsonString
+    # length = len(json['binaryData'])
+    print('data length', len(request.data))
+    resultImageBuffer = process_image(request.data)
+    # resultJsonString = JSONEncoder().encode({'resultImageBuffer': resultImageBuffer})
+    return '123'
 
 
 @app.route('/')
