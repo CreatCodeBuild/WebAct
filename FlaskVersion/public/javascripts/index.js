@@ -1,4 +1,25 @@
-function WebActor() {
+function TesseractInterface() {
+  var TAG = 'TesseractInterface';
+
+  /* function declaretions 函数声明 */
+  function process_image(imgSrc) {
+    console.log(TAG, 'process_image');
+    let newImage = new Image();
+    newImage.src = imgSrc;
+    newImage.onload = function() {
+      Tesseract.recognize(newImage, {progress: function(e){console.log(e)},lang: 'chi_sim'})
+          .then(function(d) {
+            document.getElementById('display').innerHTML += d.text;
+          });
+    }
+  }
+
+  return {
+    process_iamge: process_image
+  };
+}
+
+function WebActHTTP() {
   function post_binary_data(binaryData, rest_api_route, server_response_callback) {
     var uint8Array = new Uint8Array(binaryData); //this is an ArrayBufferView
     var xhr = new XMLHttpRequest();
@@ -88,20 +109,6 @@ function WebAct() {
 window.onload = function Main() {
   console.log('window.onload');
 
-  /* function declaretions 函数声明 */
-  function process_image(imgSrc) {
-    console.log('process_image');
-    let newImage = new Image();
-    newImage.src = imgSrc;
-
-    newImage.onload = function() {
-      Tesseract.recognize(newImage, {progress: function(e){console.log(e)},lang: 'chi_sim'})
-          .then(function(d) {
-            document.getElementById('display').innerHTML += d.text;
-          });
-    }
-  }
-
   function dataURItoBlob(dataURI) {
     // convert base64/URLEncoded data component to raw binary data held in a string
     var byteString;
@@ -148,7 +155,7 @@ window.onload = function Main() {
   /* variable declarations and assignments 变量声明和赋值 */
   let element = document.getElementById('select_file');
   let webAct = WebAct();
-  let webActor = WebActor();
+  let webActorHTTP = WebActHTTP();
   /* variable declarations and assignments end 变量声明和赋值结束 */
 
 
@@ -168,8 +175,11 @@ window.onload = function Main() {
 
 
         //send image
-        webActor.post_binary_data(arrayBuffer, '/image', function(serverResponse) {
+        webActorHTTP.post_binary_data(arrayBuffer, '/image', function(serverResponse) {
           let uint8Array = new Uint8Array(serverResponse);
+          console.log(uint8Array.byteLength);
+          let file = new File([uint8Array], 'new image');
+          set_image_view(URL.createObjectURL(file));
         });
       });
 
