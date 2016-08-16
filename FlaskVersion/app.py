@@ -17,7 +17,7 @@ def image():
     print('data length', len(request.data))
     resultImageBuffer = process_image(request.data)
     # resultJsonString = JSONEncoder().encode({'resultImageBuffer': resultImageBuffer})
-    return '123'
+    return resultImageBuffer
 
 
 @app.route('/')

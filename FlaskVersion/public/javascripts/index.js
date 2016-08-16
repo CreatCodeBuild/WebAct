@@ -6,16 +6,18 @@ function WebAct() {
    @server_response_callback: function(error, response)
    */
   function send_binary_data(binaryData, rest_api_route, server_response_callback) {
+    //todo: 需要将这里改成传递二进制数据
     // Since we deal with Firefox and Chrome only
     var bytesArray = new Uint8Array(binaryData);
 
-    console.log('send_binary_data', binaryData.length);
     console.log('send_binary_data', bytesArray);
 
     $.ajax({
       type: "POST",
       url: rest_api_route,
+      //dataType: "binary",
       contentType: 'application/octet-stream',
+      responseType:'arraybuffer',
       data: bytesArray,
       processData: false,
       success: server_response_callback
@@ -166,7 +168,9 @@ window.onload = function Main() {
 
         //send image
         webAct.send_binary_data(text, 'image', function( response ) {
-          //console.log( "Data Saved: " + JSON.parse(response) );
+          console.log('12345');
+          console.log( "Data Saved: " + typeof response);
+          console.log( "Data Saved: " + response.length);
         });
       });
 

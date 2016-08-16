@@ -103,12 +103,14 @@ def process_image(image_buffer):
 
 
     ret, buffer_of_image = cv2.imencode('.jpg', threshed)
-    list_of_byte = list(buffer_of_image.tostring())
+    buffer_string = buffer_of_image.tostring()
+    list_of_byte = list(buffer_string)
 
     print('type:', type(buffer_of_image), 'len:', len(buffer_of_image))  # debug
     print('type:', type(list_of_byte), 'len:', len(list_of_byte))
+    print('type:', type(buffer_string), 'len:', len(buffer_string))
 
-    return buffer_of_image.tostring()
+    return buffer_string
 
 
 if __name__ == '__main__':
