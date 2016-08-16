@@ -1,13 +1,14 @@
+# -*- coding: utf-8 -*-
+
 import cv2
 import numpy as np
-import zerorpc
 import sys
 import io
 
 
 """
 这是一个用Python写的图像预处理模组。
-该模组要干的事情就是从NodeJS端得到图片，将图片转化为二值图，然后将图片中的长线条移除。
+该模组将图片转化为二值图，然后将图片中的长线条移除。
 再将处理过后的图片传回给NodeJS。
 
 本模组使用到了OpenCV 3.0 Python2.7 版本
@@ -80,60 +81,33 @@ def remove_lines(threshed_image):
             cv2.line(threshed_image, (x1, y1), (x2, y2), color, 3)
 
 
-class StreamingRPC():
+def process_image(self, image_buffer):
     '''
-    zero rpc 的实现类，这个类会被传到zerorpc的模组里面去
-    详情见zerorpc官网 http://www.zerorpc.io/
+    receive image from client. remove lines. send processed image back
     '''
-    def process_image(self, image_buffer):
-        '''
-        receive image from client. remove lines. send processed image back
-        '''
 
-        # print to debug
-        print('type:', type(image_buffer), 'len:', len(image_buffer))
-        # construct image from binary buffer/file stream or whatever abstraction you see
-        image_buffer = ''.join(image_buffer)
-        np_array = np.frombuffer(image_buffer, dtype='uint8')
+    # print to debug
+    print('type:', type(image_buffer), 'len:', len(image_buffer))
+    # construct image from binary buffer/file stream or whatever abstraction you see
+    np_array = np.frombuffer(image_buffer, dtype='uint8')
 
-        # read image from raw data
-        grayscale_image = cv2.imdecode(np_array, cv2.IMREAD_GRAYSCALE)
+    # read image from raw data
+    grayscale_image = cv2.imdecode(np_array, cv2.IMREAD_GRAYSCALE)
 
-        # process the received image
-        threshed = process_an_image(grayscale_image)
-        remove_lines(threshed)
-        # cv2.imshow('', threshed)
-        # cv2.waitKey()
+    # process the received image
+    threshed = process_an_image(grayscale_image)
+    remove_lines(threshed)
+    cv2.imshow('', threshed)  # debug
+    cv2.waitKey()
 
 
-        ret, buffer_of_image = cv2.imencode('.jpg', threshed)
-        list_of_byte = list(buffer_of_image.tostring())
+    ret, buffer_of_image = cv2.imencode('.jpg', threshed)
+    list_of_byte = list(buffer_of_image.tostring())
 
-        print('type:', type(buffer_of_image), 'len:', len(buffer_of_image))  # debug
-        print('type:', type(list_of_byte), 'len:', len(list_of_byte))
+    print('type:', type(buffer_of_image), 'len:', len(buffer_of_image))  # debug
+    print('type:', type(list_of_byte), 'len:', len(list_of_byte))
 
-        # test_output(buffer_of_image)
-        print(list_of_byte[-1234].encode('hex'))
-        return buffer_of_image.tostring()
-
-    def test(self, string):
-        '''
-        用来做测试的函数，仅调试所用
-        '''
-        print(len(string), string)
-        print(type(string))
-        print(string.encode('hex'))
-
-        return string
-
-
-def server_up():
-    '''
-    启动 zerorpc 的服务器，详情见 http://www.zerorpc.io/
-    '''
-    server = zerorpc.Server(StreamingRPC())
-    server.bind("tcp://0.0.0.0:8888")  # listen for local address
-    server.run()
+    return buffer_of_image.tostring()
 
 
 if __name__ == '__main__':

@@ -6,12 +6,13 @@ function WebAct() {
    @server_response_callback: function(error, response)
    */
   function send_binary_data(binaryData, rest_api_route, server_response_callback) {
+    console.log('send_binary_data', binaryData.length);
     $.ajax({
       type: "POST",
       url: rest_api_route,
       contentType: "application/json",
       dataType: "json",
-      data: { binaryData: binaryData },
+      data: JSON.stringify({ binaryData: binaryData }),
       success: server_response_callback
     });
   }
@@ -19,6 +20,12 @@ function WebAct() {
   function file_to_buffer(file, callback) {
     var fileReader = new FileReader();
     fileReader.readAsArrayBuffer(file);
+    fileReader.onloadend = callback;
+  }
+
+  function read_file_as_test(file, callback) {
+    var fileReader = new FileReader();
+    fileReader.readAsText(file);
     fileReader.onloadend = callback;
   }
 
@@ -61,6 +68,7 @@ function WebAct() {
     select_file: select_file,
     send_binary_data: send_binary_data,
     file_to_buffer: file_to_buffer,
+    read_file_as_test: read_file_as_test,
     compress_image: image_compression
   }
 }
@@ -110,7 +118,7 @@ window.onload = function Main() {
     //this should be the compressed result image
     var compressedFile = dataURItoBlob(this.src);
     console.log(compressedFile);
-    process_image(this.src);
+    //process_image(this.src);
   }
 
   function image_element_onload() {
@@ -144,17 +152,17 @@ window.onload = function Main() {
       set_image_view(url);
       // process_image();
 
-      webAct.file_to_buffer(file, function() {
-        console.log('file_to_buffer', this.result.byteLength);
+      webAct.read_file_as_test(file, function() {
+        //console.log('file_to_buffer', this.result.byteLength);
         var text = this.result;
 
         //todo: compress the image
 
 
         //send image
-        //webAct.send_binary_data(text, 'image', function( response ) {
-        //  console.log( "Data Saved: " + response );
-        //});
+        webAct.send_binary_data(text, 'image', function( response ) {
+          console.log( "Data Saved: " + response );
+        });
       });
 
     } else {
