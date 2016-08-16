@@ -22,7 +22,8 @@ This is just a python script that uses opencv to process images. It send the pro
 
 
 # To do, I re-evaluated my priorities.
-1. 整理前端代码，使之更可维护
-2. browser needs to construct an image from the string buffer it received from NodeJS
+1. 将得到的二进制数据变成文件，
+2. 整理前端代码，显示到UI （image element）
 3. browser side semantic checking
 4. browser side image compression, to make it faster
+5. 更合理的UI
