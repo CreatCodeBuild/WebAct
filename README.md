@@ -9,9 +9,6 @@ But you can fork or clone this repo, and run it in your localhost with NodeJS
 see the source code comments
 
 # Design
-I watched a "Documentation Driven Development" talk from PyCon16, which inspired me to write this doc to guide my development.
-Hope this can get you excited to join me as well. (No, I don't really has that hope unless this is a cool software)
-
 ### The current architecture
 ####1. Frond End 前端
 Currently I have 2 main modules created by me:
