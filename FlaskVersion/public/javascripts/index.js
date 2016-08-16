@@ -8,20 +8,32 @@ function WebAct() {
   function send_binary_data(binaryData, rest_api_route, server_response_callback) {
     //todo: 需要将这里改成传递二进制数据
     // Since we deal with Firefox and Chrome only
-    var bytesArray = new Uint8Array(binaryData);
+    var bytesArray = new Uint8Array(binaryData); //this is an ArrayBufferView
 
     console.log('send_binary_data', bytesArray);
 
-    $.ajax({
-      type: "POST",
-      url: rest_api_route,
-      //dataType: "binary",
-      contentType: 'application/octet-stream',
-      responseType:'arraybuffer',
-      data: bytesArray,
-      processData: false,
-      success: server_response_callback
-    });
+    //$.ajax({
+    //  type: "POST",
+    //  url: rest_api_route,
+    //  //dataType: "binary",
+    //  contentType: 'application/octet-stream',
+    //  responseType:'arraybuffer',
+    //  data: bytesArray,
+    //  processData: false,
+    //  success: server_response_callback
+    //});
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', rest_api_route, true);
+    xhr.responseType = "arraybuffer";
+    xhr.onload = function (oEvent) {
+      var arrayBuffer = xhr.response; // Note: not oReq.responseText
+      if (arrayBuffer) {
+        let byteArray = new Uint8Array(arrayBuffer);
+        console.log('xhr', byteArray.byteLength);
+      }
+    };
+    xhr.send(bytesArray);
   }
 
   function file_to_buffer(file, callback) {
