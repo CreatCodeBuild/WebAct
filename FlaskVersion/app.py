@@ -1,4 +1,8 @@
-from flask import Flask, send_from_directory, request, abort
+from flask import Flask, send_from_directory, request
+
+from json import JSONEncoder
+
+from sd import process_image
 
 
 app = Flask(__name__)
@@ -11,7 +15,9 @@ def image():
     print('contentType', request.content_type)
     length = len(json['binaryData'])
     print('json length', length)
-    return str(length)
+    resultImageBuffer = process_image(json['binaryData'])
+    resultJsonString = JSONEncoder().encode({'resultImageBuffer': resultImageBuffer})
+    return resultJsonString
 
 
 @app.route('/')

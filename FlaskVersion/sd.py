@@ -81,7 +81,7 @@ def remove_lines(threshed_image):
             cv2.line(threshed_image, (x1, y1), (x2, y2), color, 3)
 
 
-def process_image(self, image_buffer):
+def process_image(image_buffer):
     '''
     receive image from client. remove lines. send processed image back
     '''
