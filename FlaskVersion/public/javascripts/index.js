@@ -12,17 +12,6 @@ function WebAct() {
 
     console.log('send_binary_data', bytesArray);
 
-    //$.ajax({
-    //  type: "POST",
-    //  url: rest_api_route,
-    //  //dataType: "binary",
-    //  contentType: 'application/octet-stream',
-    //  responseType:'arraybuffer',
-    //  data: bytesArray,
-    //  processData: false,
-    //  success: server_response_callback
-    //});
-
     var xhr = new XMLHttpRequest();
     xhr.open('POST', rest_api_route, true);
     xhr.responseType = "arraybuffer";
