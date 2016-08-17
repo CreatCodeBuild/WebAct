@@ -143,8 +143,8 @@ window.onload = function Main() {
     resultImage.onload = compressed_image_onload;
   }
 
-  function set_image_view(url) {
-    let imageElement = document.getElementById('ocr');
+  function set_image_view(id, url) {
+    let imageElement = document.getElementById(id);
     imageElement.onload = image_element_onload;
     imageElement.src = url;
   }
@@ -156,6 +156,7 @@ window.onload = function Main() {
   let element = document.getElementById('select_file');
   let webAct = WebAct();
   let webActorHTTP = WebActHTTP();
+  let tesseract = TesseractInterface();
   /* variable declarations and assignments end 变量声明和赋值结束 */
 
 
@@ -164,7 +165,7 @@ window.onload = function Main() {
   webAct.select_file(element, function(err, file, url) {
     if(err === undefined) { //如果没有出错
       console.log(file);
-      set_image_view(url);
+      set_image_view('ocr', url);
       // process_image();
 
       webAct.file_to_buffer(file, function() {
@@ -179,7 +180,8 @@ window.onload = function Main() {
           let uint8Array = new Uint8Array(serverResponse);
           console.log(uint8Array.byteLength);
           let file = new File([uint8Array], 'new image');
-          set_image_view(URL.createObjectURL(file));
+          set_image_view('img2', URL.createObjectURL(file));
+          tesseract.process_iamge(document.getElementById('img2').src); //need to organized later
         });
       });
 

@@ -138,7 +138,7 @@ if __name__ == '__main__':
         with io.open(sys.stdout, 'w+b') as f:
             print('type:', type(tostring), 'len:', len(tostring))
             f.write(tostring)
-        print tostring,
+        print(tostring)
 
 
     # test()
