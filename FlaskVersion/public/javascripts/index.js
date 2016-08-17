@@ -1,3 +1,5 @@
+console.log('loading index.js');
+
 function TesseractInterface() {
   var TAG = 'TesseractInterface';
 
@@ -189,6 +191,8 @@ window.onload = function Main() {
       console.log(err);
     }
   });
+
+  console.log('window.onload end');
 };
 
 //function template(inputString) {
