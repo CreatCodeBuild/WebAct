@@ -73,12 +73,14 @@ def remove_lines(threshed_image):
     """
     v_lines, h_lines = line_detect(threshed_image)
     color = (0, 0, 0)  # color to override on threshed image, in order to cover lines
-    for line in v_lines:
-        for x1, y1, x2, y2 in line:
-            cv2.line(threshed_image, (x1, y1), (x2, y2), color, 3)
-    for line in h_lines:
-        for x1, y1, x2, y2 in line:
-            cv2.line(threshed_image, (x1, y1), (x2, y2), color, 3)
+    if v_lines is not None:
+        for line in v_lines:
+            for x1, y1, x2, y2 in line:
+                cv2.line(threshed_image, (x1, y1), (x2, y2), color, 3)
+    if h_lines is not None:
+        for line in h_lines:
+            for x1, y1, x2, y2 in line:
+                cv2.line(threshed_image, (x1, y1), (x2, y2), color, 3)
 
 
 def process_image(image_buffer):
