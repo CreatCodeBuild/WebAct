@@ -1,21 +1,20 @@
 # WebAct
-Text Recognition made easy on Web
+Text Recognition made easy on Web 网页技术实现的文字识别
 
-# How to Use It?
-The web app is not publicly avaiable yet. Still developing...
-But you can fork or clone this repo, and run it in your localhost with NodeJS
+# Deployment 部署须知
+Dependencies 依赖：Python2.7.12, Flask 0.11.1, OpenCV 3.0.0-rc1
+建议部署人员建立本地化的运行环境，而不是使用系统全局的环境，以免造成冲突
 
 # Code & API
-see the source code comments
+see source code comments 参见源代码注释
 
 # Design
-### The current architecture
+### The current architecture 目前的架构
 ####1. Frond End 前端
-Currently I have 2 main modules created by me:
-1. index.js: the user space code which bridges html with other APIs
+index.html, index.js + web worker
 
 ####2. Python 后端，负责 Web Server 和图像处理
-This is just a python script that uses opencv to process images. It send the processed image back to NodeJS. Then NodeJS send this iamge back to browser.
+Python Flask Web Server + OpenCV Image Processing Module
 
 # Test
 ### There is no test. 没有测试
